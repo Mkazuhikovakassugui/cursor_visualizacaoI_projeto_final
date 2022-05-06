@@ -38,21 +38,19 @@ knitr::include_graphics("https://www.deveserisso.com.br/blog/wp-content/uploads/
 
 # Contexto
 
-<div align=justify style="text-indent: 3em;"> Durante a pandemia do Coronavírus e em plena era dos jogos "*digitais*", observa-se cada vez mais os chamados jogos *"analógicos"* (jogos de mesa e de tabuleiro) retornando às prateiras das lojas e *sites* especializados. Segundo dados da [*"Euromonitor International*](https://www.dicebreaker.com/categories/board-game/news/games-and-puzzles-market-2020-2021), empresa britânica de pesquisa de mercado,  a combinação de tempo livre e nostalgia fez com que os europeus voltassem a procurá-los como opção de lazer e entretenimento. No Brasil, este comportamento também se repete. O mercado de brinquedos e jogos tradicionais aumentou de 1% do período pré-pandêmico para 3,16% em 2022.
+<div align=justify style="text-indent: 3em;"> Durante a pandemia de covid-19 e em plena era dos jogos "*digitais*", observa-se uma crescente procura pelos chamados jogos *"analógicos"*, jogos de mesa e de tabuleiro, que retornaram às prateiras das lojas e *sites* especializados. Segundo dados da [*Euromonitor International*](https://www.dicebreaker.com/categories/board-game/news/games-and-puzzles-market-2020-2021), empresa britânica de pesquisa de mercado,  a combinação de tempo livre e nostalgia fez com que os europeus voltassem a procurá-los como opção de entretenimento. No Brasil, este comportamento também se repete. O mercado de brinquedos e jogos tradicionais aumentou de 1% do período pré-pandêmico para 3,16% em 2022.
 
-Inclusive, há notícias de que famosos jogos de consoles como [**"Assassin's Creed"**](https://olhardigital.com.br/2022/03/17/games-e-consoles/jogo-de-tabuleiro-de-assassins-creed-sera-lancado-em-2022/) ou [**"The Elder Scrolls 5: Skyrim"**](https://canaltech.com.br/games/the-elder-scrolls-5-skyrim-tera-jogo-de-tabuleiro-em-2022-200773/)tenham suas versões de tabuleiro lançadas em 2022.
+Inclusive, há notícias de que famosos jogos de *consoles* como [*"Assassin's Creed"*](https://olhardigital.com.br/2022/03/17/games-e-consoles/jogo-de-tabuleiro-de-assassins-creed-sera-lancado-em-2022/) ou [*"The Elder Scrolls 5: Skyrim"*](https://canaltech.com.br/games/the-elder-scrolls-5-skyrim-tera-jogo-de-tabuleiro-em-2022-200773/)  tenham suas versões de tabuleiro lançadas em 2022.
 
-O trabalho final do curso de Visualizações I tem por objetivo analisar uma base de dados e construir visualizações gráficas a partir de seus dados. 
+O trabalho final do curso de Visualizações-I, **da Curso-R**, tem por objetivo analisar um *dataset* e construir visualizações gráficas a partir de seus dados. 
 
-Uma das sugestões do curso foi a base de dados "Board Games" do *site* "Kaggle". A plataforma "Tidytuesday" utilizou este *dataset* em um dos seus eventos semanais. Resolvi, então, usá-la para a elaboração deste trabalho.
+Uma das sugestões da Curso-R foi a base "*Board Games*", disponibilizada pelo *site* *Kaggle* e utilizada pelo *Tidytuesday*, evento semanal que desafia os usuários da linguagem R a construir visualizações sobre um tema e assim promover discussões saudáveis. Resolvi usá-la para a elaboração deste trabalho.
 
-O TidyTuesday é um evento semanal R4DS Online for Data Science #TidyTuesday. que desafia os usuários da linguagem R a construir visualizações sobre o tema e assim promover discussões saudáveis. Os usuários podem, assim,  obter *feedback*, aprender com o trabalho de outras pessosas e se conectar com a comunidade do R. 
+A base *"Board Games"* é composta pelos arquivos *"ratings"* e *"details"*, que trazem informações sobre jogos de tabuleiros como *ranking*, nomes dos jogos, ano de lançamento, nota média e a nota média bayesiana, número de jogadores, entre outros dados.
 
-A base  *"Board Games"* é composta por dois arquivos de dados: *"ratings"* e *"details"*, que trazem informações sobre jogos de tabuleiros como **ranking**, nomes dos jogos, ano de lançamento, nota média e a nota média bayesiana, número de jogadores, entre outros dados.
-
-As visualizações que apresentarei neste relatório foram criadas pensando nas pessoas que, em algum momento, precisam de um jogo de que permita ser jogado por um jogador ou mais, chamados de **"solo board games"**. Não são raros, principalmente neste período pandêmico, momentos em que nos encontramos sozinhos e gostaríamos de um passatempo para ocupar nossas mentes.
-
+As visualizações que apresentarei neste relatório foram criadas para aqueles que necessitam de jogos de um ou mais jogadores, chamados de **"solo board games"** por permitirem  partidas de apenas um jogador.
 </div>
+---
 
 # Carregamento dos Pacotes
 
@@ -65,7 +63,9 @@ library(readr)
 library(ggtext)
 library(stringr)
 library(kableExtra)
+library(ggrepel)
 ```
+---
 
 # Leitura da Base
 
@@ -75,16 +75,17 @@ library(kableExtra)
 
 jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 ```
+---
 
-# Visualizações
+## Melhores do Ranking e sua notas médias.
 
-## Melhores do Ranking e médias
+<div align=justify style="text-indent: 3em;"> Assim como os jogos digitais alguns jogos de tabuleiro permitem que a partida seja realizada por apenas um jogador que pode aproveitar os momentos em que está só, fugir de toda tecnologia e se aventurar em um jogo de tabuleiro. 
 
-<div align=justify style="text-indent: 3em;">As vezes as pessoas ficam sozinhas em casa e gostariam de ter um jogo de tabuleiro para se divertir, ou simplesmente adoram jogar sozinhas. Para estas pessoas elaboramos os gráficos que seguirão. Ele é conhecido como *"lollipop plot"*, um tipo de um gráfico de barras, mas com as barras  substitúidas por uma linha e um ponto em sua extremidade.
+Apresentarei as opções mais procuradas, desejadas e compradas dos jogos de acordo com a base *Board Game* no seuinte gráfico conhecido como *"lollipop plot"*, um tipo de um gráfico de barras em que as barras são substitúidas por uma linha e um círulo em sua extremidade.
 
-O gráfico em questão apresenta os jogos que permitem ao usuário brincar sozinho ou com mais jogadores. Eles estão ordenados pela sua posição no ranking geral entre todos os jogos e trazem as respectivas notas médias bayesianas.
+Estes jogos permitem que o jogador participe de sessões do jogo sozinho ou com mais jogadores. Estão ordenados pela sua posição no ranking geral entre os jogos e trazem as respectivas notas médias bayesianas.
 
-Nesta análise, consideramos apenas os jogos com mais de 10000 avaliações e selecionarmos, apenas 20 jogos.
+Nesta análise, considerou-se somente os 20 jogos melhores avaliados entre aqueles com no mínimo 10.000 avaliações.
 
 </div>
 
@@ -214,11 +215,13 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
 
 ```
 
-## O mais desejados e ranking
+## O mais desejados e seus *rankings*
 
-<div align=justify style="text-indent: 3em;">Digamos que você não confie muito *rankings*, então vamos analisar quais são os mais desejados entre os jogadores e suas posições no *"ranking"* geral de jogos.
+<div align=justify style="text-indent: 3em;">Entenda por desejados como aqueles jogos em que os avaliadores expressaram seu desejo de ganhá-los, ou seja, colocariam em suas *wishlists* (listas de desejos).
 
-Vamos considerar novamente apenas os jogos com mais de 10000 avaliações e selecionaremos os vinte jogos mais desejados.
+Quais seriam os jogos mais desejados e suas posições no *ranking*?
+
+Novamente considerou-se apenas os jogos com mais de 10000 avaliações.  O gráfico a seguir apresenta os vinte jogos mais desejados.
 
 ```{r grafico02 - Jogos para um jogador-b}
 #| echo = FALSE,
@@ -341,14 +344,23 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
     )
 ```
 
-
-<div align=justify style="text-indent: 3em;"> Vimos que nem todos os jogos do topo do *ranking* são os mais desejados pelos usuparios que participaram das avaliações. Fatores como preço, tempo mínimo de jogo, categoria, mecânica do jogo, faixa etária afetam o desejo em adquirir um ou outro jogo. 
-Por este motivo há a diferença entre as variáveis "desejar" e "querer". Nem sempre o jogo que colocamos em uma lista de desejos (wishlist) é também aquele que colocamos em uma lista de procurados quando estamos camprando o jogo. 
-
-Considerando que: 1)  um tema que não chama a atenção do jogador o torna desinteressante, é preciso escolher bem entre os vários temas disponiveis como aventura, terror, médico, animais, ficção científica e até inspirados em outras obras como livros; 2) o tempo de jogo é importante para quem joga sozinho, então  um jogo que demore em média 4 horas talvez não seja o que você deseja; 3) quem vai jogar é uma criança, deve-se observar a idade mínima. Muitos jogos exigem um raciocínio analítico e uso de estratégias avançadas, por este motivo os fabricantes informam a idade mínima recomendada e 4) a "rejogabilidade", ou seja, jogar novamente com novas aventuras é importante, então é preciso que haja extensões de jogos.
+<div align=justify style="text-indent: 3em;"> Entretanto, vimos que nem todos os jogos do topo do *ranking* são os mais desejados pelos usuários. Fatores como preço, tempo mínimo de jogo, categoria, mecânica do jogo, faixa etária afetam o desejo de ganhar o jogo.
 
 
-Então, vamos considerar estas varíaveis nos gráficos que seguirão.
+Nos gráficos que seguirão, consideraremos que:
+
+- Um tema que não chama a atenção do jogador o torna desinteressante, é preciso escolher bem entre os vários temas disponiveis como aventura, terror, médico, animais, ficção científica e até inspirados em outras obras como livros;  </p>
+
+- O tempo de jogo é importante para quem joga sozinho, então  um jogo que demore em média 4 horas talvez não seja o que você deseja; 
+
+- Se quem vai jogar é uma criança, deve-se observar a idade mínima. Muitos jogos exigem um raciocínio analítico e uso de estratégias
+avançadas, por este motivo os fabricantes informam a idade mínima recomendada e  
+
+- A "rejogabilidade", ou seja, jogar novamente com novas aventuras, é importante. Então prefira aqueles com extensões de jogos.
+
+</div>
+
+## Jogos por Categoria
 
 ```{r analise mais desejados por categoria e tempo minimo}
 #| echo = FALSE
@@ -450,7 +462,6 @@ anotar_2_ranking <- function(.name_game) {
              fontface = "bold"
     )
 }
-
 
 # categorias selecionadas
 categorias <- c("Ancient", "Card Game", "City Building", "Civilization", "Economic",
@@ -653,7 +664,6 @@ jogos_tabuleiro_categoria |>
             size = 11,
             face = "bold",
             margin = unit(c(0, 0.3, 0.3, 0), "cm"),   # afasta o texto do eixo y e do titulo do eixo
-            
         ),                                                                 
         axis.ticks.y = element_line(color = "white"),                  # padrões dos ticks do eixo x
         axis.line.y = element_line(
@@ -667,8 +677,8 @@ jogos_tabuleiro_categoria |>
         ),
         legend.title = element_text(size = 9.2, color = "#FFFFFF", face = "bold", family = "arial"),
         legend.position = c(0.80,.89),
-        legend.background = element_rect(color = "#000000"),
-        legend.box.background = element_rect(color = "#002642"),
+        
+        legend.background = element_rect(fill = "#1F1F1F"),
         legend.text = element_text(size = 6, color = "#FFFFFF", face = "bold"),
         legend.direction = "horizontal"
     )+
@@ -721,9 +731,9 @@ jogos_tabuleiro_categoria |>
     anotar_1_ranking(the_7_continent)+
     anotar_1_ranking(le_havre)+
     annotate("rect", xmin = 13400, xmax = 20000, ymin = 28, ymax = 32 ,       # Anotações da legenda
-             fill = "black", color = "black", alpha = 1)+
+             fill = "#1F1F1F", color = "#1F1F1F", alpha = 1)+
     annotate("rect", xmin = 18700, xmax = 19600, ymin = 30, ymax = 30.6,
-             fill = "#C1EEFF", alpha = 1, color = "#000000", size = 0.3)+
+             fill = "#C1EEFF", alpha = 1, color = "#1F1F1F", size = 0.3)+
     annotate("rect", xmin = 18700, xmax = 19600, ymin = 30.6, ymax = 31.2,
              fill = "#FFEFB8", alpha = 1, color = "#000000", size = 0.3)+
     annotate("text", x = 16100, y = 30.7, label = "mais desejados por categoria",
@@ -881,15 +891,4 @@ fluidPage(                                      # selecionar o nome do filme par
 
 ```
 
-
-
-
-<div align=justify style="text-indent: 3em;"> Os tempos de jogos (mínimo e máximo) estão expressos em minutos. Trata-se de um tempo médio de jogo, haja vista que o tempo de duração depende de fatores como por exemplo o números de jogadores e não considera o tempo de *setup*, aquele gasto para retirar todas a peças e dispô-las no tabuleiro. 
-
-O tempo de jogo é um fator importante na escolha, como também a categoria, a mecânica, a faixa etária, etc.
-
-
-
-Entretanto, alguns jogos como "Robinson Crusoe - Adventures on the Cursed Island", "The 7th Continent" e "Le Havre" 
-</div>
 
