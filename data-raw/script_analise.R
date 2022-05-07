@@ -20,7 +20,7 @@ library(ggrepel)
 
 jogos_tabuleiro <- read_rds("data/base_preparada.RDS")
 
-
+glimpse(jogos_tabuleiro)
 
 # 3 Primeiro gráfico -------------------------------------------------------------------------
 
