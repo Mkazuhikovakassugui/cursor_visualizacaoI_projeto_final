@@ -81,245 +81,238 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 <style type="text/css">
 .tg  {border-collapse:collapse;border-color:#bbb;border-spacing:0;}
 .tg td{background-color:#E0FFEB;border-color:#bbb;border-style:solid;border-width:1px;color:#594F4F;
-  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:4px 5px;word-break:normal;}
 .tg th{background-color:#9DE0AD;border-color:#bbb;border-style:solid;border-width:1px;color:#493F3F;
-  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-owt4{background-color:#38cf6d;border-color:#000000;color:#000000;font-size:14px;font-weight:bold;text-align:center;
-  vertical-align:top}
-.tg .tg-3fc6{background-color:#1f1f1f;border-color:inherit;color:#ffffff;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-bykx{background-color:#38cf6d;border-color:#000000;color:#000000;font-size:12px;font-weight:bold;text-align:left;
-  vertical-align:middle}
-.tg .tg-kwtr{background-color:#38cf6d;border-color:#000000;color:#000000;font-size:12px;font-weight:bold;text-align:left;
-  vertical-align:top}
-.tg .tg-5fr4{background-color:#1f1f1f;border-color:inherit;color:#ffc745;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-vl9x{background-color:#1f1f1f;border-color:inherit;color:#ffffff;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-ah45{background-color:#1f1f1f;border-color:inherit;color:#ffc745;font-size:11px;text-align:left;vertical-align:top}
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:4px 5px;word-break:normal;}
+.tg .tg-onvs{background-color:#ffffff;border-color:#c0c0c0;color:#000000;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;text-align:left;vertical-align:top}
+.tg .tg-nfzr{background-color:#ecf4ff;border-color:#c0c0c0;color:#000000;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;text-align:left;vertical-align:top}
+.tg .tg-nh0w{background-color:#237ca9;border-color:#c0c0c0;color:#ffffff;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:14px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-xbii{background-color:#237ca9;border-color:#c0c0c0;color:#ffffff;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-ddzq{background-color:#237ca9;border-color:#c0c0c0;color:#ffffff;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;font-weight:bold;text-align:left;vertical-align:top}
 </style>
-<table class="tg" style="undefined;table-layout: fixed; width: 830px">
+<table class="tg" style="undefined;table-layout: fixed; width: 827px">
 <colgroup>
-<col style="width: 211px">
-<col style="width: 211px">
-<col style="width: 408px">
+<col style="width: 211.005682px">
+<col style="width: 211.005682px">
+<col style="width: 405.005682px">
 </colgroup>
 <thead>
   <tr>
-    <th class="tg-owt4" colspan="3">Ratings.csv</th>
+    <th class="tg-nh0w" colspan="3">Ratings.CSV</th>
   </tr>
 </thead>
 <tbody>
   <tr>
-    <td class="tg-bykx">Variável        </td>
-    <td class="tg-kwtr">Tipo            </td>
-    <td class="tg-kwtr">Descrição       </td>
+    <td class="tg-xbii">Variável</td>
+    <td class="tg-ddzq">Tipo</td>
+    <td class="tg-ddzq">Descrição</td>
   </tr>
   <tr>
-    <td class="tg-5fr4">num</td>
-    <td class="tg-vl9x">double</td>
-    <td class="tg-vl9x">Número do jogo</td>
+    <td class="tg-nfzr">num</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Número do jogo</td>
   </tr>
   <tr>
-    <td class="tg-ah45">id</td>
-    <td class="tg-3fc6">double</td>
-    <td class="tg-3fc6">ID do jogo</td>
+    <td class="tg-onvs">id</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">ID do jogo</td>
   </tr>
   <tr>
-    <td class="tg-5fr4">name</td>
-    <td class="tg-vl9x">character</td>
-    <td class="tg-vl9x">Nome do jogo</td>
+    <td class="tg-nfzr">name</td>
+    <td class="tg-nfzr">character</td>
+    <td class="tg-nfzr">Nome do jogo</td>
   </tr>
   <tr>
-    <td class="tg-ah45">year</td>
-    <td class="tg-3fc6">double      </td>
-    <td class="tg-3fc6">Ano de lançamento    </td>
+    <td class="tg-onvs">year</td>
+    <td class="tg-onvs">double      </td>
+    <td class="tg-onvs">Ano de lançamento    </td>
   </tr>
   <tr>
-    <td class="tg-5fr4">rank</td>
-    <td class="tg-vl9x">double</td>
-    <td class="tg-vl9x">Ranking </td>
+    <td class="tg-nfzr">rank</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Ranking </td>
   </tr>
   <tr>
-    <td class="tg-ah45">average</td>
-    <td class="tg-3fc6">double</td>
-    <td class="tg-3fc6">Média</td>
+    <td class="tg-onvs">average</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">Média</td>
   </tr>
   <tr>
-    <td class="tg-5fr4">bayes_average</td>
-    <td class="tg-vl9x">double</td>
-    <td class="tg-vl9x">Média bayesiana</td>
+    <td class="tg-nfzr">bayes_average</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Média bayesiana</td>
   </tr>
   <tr>
-    <td class="tg-ah45">users_rated</td>
-    <td class="tg-3fc6">double</td>
-    <td class="tg-3fc6">Total de votações dos usuários</td>
+    <td class="tg-onvs">users_rated</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">Total de votações dos usuários</td>
   </tr>
   <tr>
-    <td class="tg-5fr4">url</td>
-    <td class="tg-vl9x">character</td>
-    <td class="tg-vl9x">URL do jogo</td>
+    <td class="tg-nfzr">url</td>
+    <td class="tg-nfzr">character</td>
+    <td class="tg-nfzr">URL do jogo</td>
   </tr>
   <tr>
-    <td class="tg-ah45">thumbnail</td>
-    <td class="tg-3fc6">character</td>
-    <td class="tg-3fc6">Thumbnail do jogo</td>
+    <td class="tg-onvs">thumbnail</td>
+    <td class="tg-onvs">character</td>
+    <td class="tg-onvs">Thumbnail do jogo</td>
   </tr>
 </tbody>
 </table>
-
 <br>
 
 <style type="text/css">
-.tg  {border-collapse:collapse;border-color:#bbb;border-spacing:0;}
-.tg td{background-color:#E0FFEB;border-color:#bbb;border-style:solid;border-width:1px;color:#594F4F;
-  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{background-color:#9DE0AD;border-color:#bbb;border-style:solid;border-width:1px;color:#493F3F;
-  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-v4yg{background-color:#1f1f1f;border-color:#ffffff;color:#ffc745;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-owt4{background-color:#38cf6d;border-color:#000000;color:#000000;font-size:14px;font-weight:bold;text-align:center;
-  vertical-align:top}
-.tg .tg-3fc6{background-color:#1f1f1f;border-color:inherit;color:#ffffff;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-bykx{background-color:#38cf6d;border-color:#000000;color:#000000;font-size:12px;font-weight:bold;text-align:left;
-  vertical-align:middle}
-.tg .tg-kwtr{background-color:#38cf6d;border-color:#000000;color:#000000;font-size:12px;font-weight:bold;text-align:left;
-  vertical-align:top}
-.tg .tg-vl9x{background-color:#1f1f1f;border-color:inherit;color:#ffffff;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-9wel{background-color:#1f1f1f;border-color:#ffffff;color:#ffc745;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-0fiz{background-color:#1f1f1f;color:#ffc745;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-lp52{background-color:#1f1f1f;color:#ffffff;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-ioye{background-color:#1f1f1f;color:#ffc745;font-size:11px;text-align:left;vertical-align:top}
-.tg .tg-3ykh{background-color:#1f1f1f;color:#ffffff;font-size:11px;text-align:left;vertical-align:top}
+.tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
+.tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:4px 5px;word-break:normal;}
+.tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:4px 5px;word-break:normal;}
+.tg .tg-onvs{background-color:#ffffff;border-color:#c0c0c0;color:#000000;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;text-align:left;vertical-align:top}
+.tg .tg-nfzr{background-color:#ecf4ff;border-color:#c0c0c0;color:#000000;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;text-align:left;vertical-align:top}
+.tg .tg-nh0w{background-color:#237ca9;border-color:#c0c0c0;color:#ffffff;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:14px;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-xbii{background-color:#237ca9;border-color:#c0c0c0;color:#ffffff;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;font-weight:bold;text-align:left;vertical-align:middle}
+.tg .tg-ddzq{background-color:#237ca9;border-color:#c0c0c0;color:#ffffff;font-family:Arial, Helvetica, sans-serif !important;
+  font-size:13px;font-weight:bold;text-align:left;vertical-align:top}
 </style>
-<table class="tg" style="undefined;table-layout: fixed; width: 829px">
+<table class="tg" style="undefined;table-layout: fixed; width: 837px">
 <colgroup>
-<col style="width: 211.005682px">
-<col style="width: 211.005682px">
+<col style="width: 215.005682px">
+<col style="width: 215.005682px">
 <col style="width: 407.005682px">
 </colgroup>
 <thead>
   <tr>
-    <th class="tg-owt4" colspan="3">Details.csv</th>
+    <th class="tg-nh0w" colspan="3">Details.csv</th>
   </tr>
 </thead>
 <tbody>
   <tr>
-    <td class="tg-bykx">Variável    </td>
-    <td class="tg-kwtr">Tipo        </td>
-    <td class="tg-kwtr">Descrição   </td>
+    <td class="tg-xbii">Variável                      </td>
+    <td class="tg-ddzq">Tipo                          </td>
+    <td class="tg-ddzq">Descrição                    </td>
   </tr>
   <tr>
-    <td class="tg-v4yg">num</td>
-    <td class="tg-vl9x">double</td>
-    <td class="tg-vl9x">Número do jogo</td>
+    <td class="tg-nfzr">num</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Número do jogo</td>
   </tr>
   <tr>
-    <td class="tg-9wel">id</td>
-    <td class="tg-3fc6">double</td>
-    <td class="tg-3fc6">ID do jogo</td>
+    <td class="tg-onvs">id</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">ID do jogo</td>
   </tr>
   <tr>
-    <td class="tg-v4yg">primary</td>
-    <td class="tg-vl9x">character</td>
-    <td class="tg-vl9x">Nome do jogo</td>
+    <td class="tg-nfzr">primary</td>
+    <td class="tg-nfzr">character</td>
+    <td class="tg-nfzr">Nome do jogo</td>
   </tr>
   <tr>
-    <td class="tg-9wel">year published</td>
-    <td class="tg-3fc6">double      </td>
-    <td class="tg-3fc6">Ano de lançamento    </td>
+    <td class="tg-onvs">year published</td>
+    <td class="tg-onvs">double      </td>
+    <td class="tg-onvs">Ano de lançamento    </td>
   </tr>
   <tr>
-    <td class="tg-v4yg">min_players</td>
-    <td class="tg-vl9x">double</td>
-    <td class="tg-vl9x">Número mínimo de jogadores</td>
+    <td class="tg-nfzr">min_players</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Número mínimo de jogadores</td>
   </tr>
   <tr>
-    <td class="tg-9wel">max_players</td>
-    <td class="tg-3fc6">double</td>
-    <td class="tg-3fc6">Número máximo de jogadores</td>
+    <td class="tg-onvs">max_players</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">Número máximo de jogadores</td>
   </tr>
   <tr>
-    <td class="tg-v4yg">playing_time</td>
-    <td class="tg-vl9x">double</td>
-    <td class="tg-vl9x">Tempo de jogo em minutos</td>
+    <td class="tg-nfzr">playing_time</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Tempo de jogo em minutos</td>
   </tr>
   <tr>
-    <td class="tg-9wel">min_play_time</td>
-    <td class="tg-3fc6">double</td>
-    <td class="tg-3fc6">Tempo mínimo de jogo em minutos</td>
+    <td class="tg-onvs">min_play_time</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">Tempo mínimo de jogo em minutos</td>
   </tr>
   <tr>
-    <td class="tg-v4yg">max_play_time</td>
-    <td class="tg-vl9x">double</td>
-    <td class="tg-vl9x">Tempo máximo de jogo em minutos</td>
+    <td class="tg-nfzr">max_play_time</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Tempo máximo de jogo em minutos</td>
   </tr>
   <tr>
-    <td class="tg-9wel">min_age</td>
-    <td class="tg-3fc6">double</td>
-    <td class="tg-3fc6">Idade mínima</td>
+    <td class="tg-onvs">min_age</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">Idade mínima</td>
   </tr>
   <tr>
-    <td class="tg-0fiz">board_game_category</td>
-    <td class="tg-lp52">character</td>
-    <td class="tg-lp52">Categoria</td>
+    <td class="tg-nfzr">board_game_category</td>
+    <td class="tg-nfzr">character</td>
+    <td class="tg-nfzr">Categoria</td>
   </tr>
   <tr>
-    <td class="tg-ioye">board_game_mechanic</td>
-    <td class="tg-3ykh">character</td>
-    <td class="tg-3ykh">Mecânica </td>
+    <td class="tg-onvs">board_game_mechanic</td>
+    <td class="tg-onvs">character</td>
+    <td class="tg-onvs">Mecânica </td>
   </tr>
   <tr>
-    <td class="tg-0fiz">board_game_family</td>
-    <td class="tg-lp52">character </td>
-    <td class="tg-lp52">Família do jogo</td>
+    <td class="tg-nfzr">board_game_family</td>
+    <td class="tg-nfzr">character </td>
+    <td class="tg-nfzr">Família do jogo</td>
   </tr>
   <tr>
-    <td class="tg-ioye">board_game_expansion</td>
-    <td class="tg-3ykh">character</td>
-    <td class="tg-3ykh">Expansão</td>
+    <td class="tg-onvs">board_game_expansion</td>
+    <td class="tg-onvs">character</td>
+    <td class="tg-onvs">Expansão</td>
   </tr>
   <tr>
-    <td class="tg-0fiz">board_game_implementation</td>
-    <td class="tg-lp52">character</td>
-    <td class="tg-lp52">Execução</td>
+    <td class="tg-nfzr">board_game_implementation</td>
+    <td class="tg-nfzr">character</td>
+    <td class="tg-nfzr">Execução</td>
   </tr>
   <tr>
-    <td class="tg-ioye">board_game_designer</td>
-    <td class="tg-3ykh">character</td>
-    <td class="tg-3ykh">Designer / Criador</td>
+    <td class="tg-onvs">board_game_designer</td>
+    <td class="tg-onvs">character</td>
+    <td class="tg-onvs">Designer / Criador</td>
   </tr>
   <tr>
-    <td class="tg-0fiz">board_game_artist</td>
-    <td class="tg-lp52">character</td>
-    <td class="tg-lp52">Artista</td>
+    <td class="tg-nfzr">board_game_artist</td>
+    <td class="tg-nfzr">character</td>
+    <td class="tg-nfzr">Artista</td>
   </tr>
   <tr>
-    <td class="tg-ioye">board_game_publisher</td>
-    <td class="tg-3ykh">character</td>
-    <td class="tg-3ykh">Editora</td>
+    <td class="tg-onvs">board_game_publisher</td>
+    <td class="tg-onvs">character</td>
+    <td class="tg-onvs">Editora</td>
   </tr>
   <tr>
-    <td class="tg-0fiz">owned</td>
-    <td class="tg-lp52">double</td>
-    <td class="tg-lp52">Adquiridos</td>
+    <td class="tg-nfzr">owned</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Adquiridos</td>
   </tr>
   <tr>
-    <td class="tg-ioye">trading</td>
-    <td class="tg-3ykh">double</td>
-    <td class="tg-3ykh">Comercializados</td>
+    <td class="tg-onvs">trading</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">Comercializados</td>
   </tr>
   <tr>
-    <td class="tg-0fiz">wanting</td>
-    <td class="tg-lp52">double</td>
-    <td class="tg-lp52">Número de usuários que gostariam de adquirir o jogo</td>
+    <td class="tg-nfzr">wanting</td>
+    <td class="tg-nfzr">double</td>
+    <td class="tg-nfzr">Número de usuários que gostariam de adquirir o jogo</td>
   </tr>
   <tr>
-    <td class="tg-ioye">wishing</td>
-    <td class="tg-3ykh">double</td>
-    <td class="tg-3ykh">Número de usuários que desejariam ganhar o jogo</td>
+    <td class="tg-onvs">wishing</td>
+    <td class="tg-onvs">double</td>
+    <td class="tg-onvs">Número de usuários que desejariam ganhar o jogo</td>
   </tr>
 </tbody>
 </table>
 
-
-</div>
 
 ## Melhores do Ranking e sua notas médias.
 
@@ -342,120 +335,125 @@ Nesta análise, considerou-se somente os 20 jogos melhores avaliados entre aquel
 #| out.height = 800,
 
 cor <- c(                                              # pallet de cores para os elementos gráficos.
-  "#8599EA", "#7DE2D1", "#FBEEFB", "#D3EEDF", "#BC8DA7",
-  "#F6EBCB", "#BACADE", "#C4B8CC", "#E77478", "#91F5AD",
-  "#EFDA7E", "#BD2554", "#4EAFD4", "#0DF205", "#EFDFD0",
-  "#D3EEDF", "#632A50", "#C4B8CC", "#7DE2D1", "#FF6465"
+  "#C2D9FF", "#871607", "#081121", "#EA250B", "#30292F",
+  "#CCAA00", "#CB8589", "#811192", "#EF7B45", "#4BB3FD",
+  "#735CDD", "#BD2554", "#829DB0", "#0DF205", "#37000A",
+  "#201E1F", "#632A50", "#390099", "#F2542D", "#0A369D"
 )
 
-jogos_tabuleiro |>      
-  filter(users_rated >= 10000 & !is.na(rank) & min_players == 1) |>
-  arrange(rank) |>                                                             # ordenarpor ranking.
-  slice_head(n = 20) |>                                                 # vinte primeiros elementos.
-  ggplot(aes(
-    x = fct_reorder(name, rank, .desc = TRUE),                               # reordenar as colunas.
-    y = rank,
-    label = round(bayes_average, 2)
-  )) +
-  geom_segment(aes(                                                      # cria o elemento segmento.
-    x = fct_reorder(name, rank, .desc = TRUE),                              
-    xend = name,
-    y = 0,
-    yend = rank
-  ),
-  color = cor,                          
-  size = 1.5
-  ) +
-  geom_point(aes(color = year),                                           # cria o elemento círculo.
-    size = 8.5,
-    color = cor                               
-  ) +
-  geom_label(
-    size = 3,                          # definir os padrões do label (valores das médias bayesianas)
-    alpha = 0,
-    label.size = NA,                     # lobel.size = NA remove a moldura retangular sobre o label
-    fontface = "bold",                                                               # fonte negrita
-    color = "#000000"                                                         # cor do label "preto"
-  ) +
-  geom_curve(aes(                                     # define a linha curva para indicar a anotação
-    x = 20.2,                                               # valor de x em que inicia a linha curva
-    y = 2.5,                                                # valor de y em que inicia a linha curva
-    xend = 17.9,                                         # valor de x em que termina a linha curva
-    yend = 24.8                                            # valor de y em que termina a linha curva
-  ),
-  arrow = arrow(                                                 # cria a seta no fim da linha curva
-    type = "closed",                                                                  # tipo da seta
-    length = unit(0.02, "npc")                                                     # tamanho da seta
-  ),
-  curvature = -0.1,                            # curvatura da linha curva ( se =0 torna-se uma reta)
-  color = "#8599EA"                                                             # cor da linha curva
-  ) +
-  labs(                                                 # edita o texto do título, subtítulo e eixos
-    title = "Jogos de Tabuleiro para quem for jogar *<span style = 'color:#FFC745;'>sozinho!!</span>*",
-    subtitle ="Os vinte melhores jogos com suas posições no ranking geral e notas médias",
-    y = "Ranking dos Jogos",
-    x = ""
-  ) +
-  ggdark::dark_theme_classic() +                                     # tema escolhido para o gráfico
-  scale_y_continuous(breaks = seq(1, 44, 2)) +         # eixo y começa em 1, termina em 44 de 2 em 2
-  theme(                                          # otimizamos o gráfico, alterando diversos fatores
-    panel.grid.minor.y = element_blank(),                                             # tipo do grid
-    panel.grid.major.y = element_blank(),
-    panel.background = element_rect(fill = "#1F1F1F"),                             # fundo do painel
-    plot.background = element_rect(fill = "#1F1F1F"),                          # mesmo fundo do plot
-    plot.margin = unit(c(1, 1, 1, -0.3), "cm"),         # aumenta a distância do gráfico das margens
-    plot.title = element_markdown(
-      size = 32,                                                    # usamos o element tipo markdown
-      face = "plain",                                                          # tiço da letra plain
-      family = "FrankyOutline",                                                    # fonte do título
-      hjust = 3,
-      margin = unit(c(0, 0, 0.5, 0), "cm")                            # afasta o título do subtítulo
-    ),                                                       # posição horizontal do texto do título
-    text = element_text(                                          # define os fatores para os textos
-      family = "LexieReadable",                               # define o tipo da fonte usada
-      color = "#38CF6D",
-      size = 10,
-      hjust = 0,
-      face = "bold"
-    ),
-    axis.text.x = element_text(
-      color = "#38CF6D",                                                # padrões do texto do eixo x
-      size = 7.5,
-      face = "bold",
-      margin = unit(c(0.3, 0, 0.5, 0), "cm")  # afasta o texto do eixo x do eixo e do titulo do eixo
-    ),
-    axis.ticks.x = element_line(color = "white"),                      # padrões dos ticks do eixo x
-    axis.line.x = element_line(color = "white"),                              # eixo x na cor branca
-    axis.text.y = element_markdown(
-      color = "#FFFFFF",                                              # padrões das letras do eixo y
-      size = 9.5,
-      face = "bold",
-      family = "LexieReadable", 
-    ),                                                                 
-    axis.ticks.y = element_line(color = "white"),                      # padrões dos ticks do eixo x
-    axis.line.y = element_line(
-      color = "white",                                                        # eixo y na cor branca
-      size = 0.4,
-    ),
-    axis.title = element_text(
-      face = "bold",                                          # padrões da letra do titulo do eixo x
-      size = 10,
-      hjust = 0.5,
-    ),
-    legend.position = "none"                                           # exclui a legenda do gráfico
-  ) +
-  coord_flip() +                                                     # inverte o eixo x com o eixo y
-  annotate(                                                                # faz anotação no gráfico
-    "text",
-    x = 16, y = 32, label = "Precisando jogar sozinho? 
-    Considerando o ranking, Gloomhavem é a
-    melhor indicação. Ele ocupa a 1ª  posição
-    no rankig geral entre jogos  de  tabuleiro
-    com a nota 8.51 e permite jogar  sozinho.",
-    color = "#8599EA", size = 3.5,
-    family = "LexieReadable",
-    fontface = "bold"
-  )
+jogos_tabuleiro |>    
+    filter(users_rated >= 10000 & !is.na(rank) & min_players == 1) |>
+    arrange(rank) |>                                                          # ordenar por ranking.
+    slice_head(n = 20) |>                                               # vinte primeiros elementos.
+    ggplot(aes(
+        x = fct_reorder(name, rank, .desc = TRUE),              # reordenar as colunas como fatores.
+        y = rank,
+        label = round(bayes_average, 2)
+        )
+        ) +
+    geom_segment(aes(x = fct_reorder(name, rank, .desc = TRUE),         # criar o elemento segmento.
+                     xend = name,
+                     y = 0,
+                     yend = rank
+                     ),
+                 color = cor,   
+                 size = 1.5
+                 ) +
+    geom_point(aes(color = year),                                        # criar o elemento círculo.
+               size = 8.5,
+               color = cor    
+               ) +
+    geom_label(                                                                # formatar os labels.
+        size = 3, 
+        alpha = 0,
+        label.size = NA,    
+        fontface = "bold",    
+        color = "#FFFFFF"  
+        ) +
+    geom_curve(aes(y = 2.5,                                          # formatar curva para anotação.
+                   x = 20.2,  
+                   xend = 17.9,     
+                   yend = 24.2   
+                   ),
+               arrow = arrow(                                            # formatar a seta da curva.
+                 type = "closed",          
+                 length = unit(0.02, "npc")     
+                 ),
+               curvature = -0.1,  
+               color = "#C2D9FF"   
+               ) +
+    labs(                                             # editar o texto do título, subtítulo e eixos.
+        title = "Jogos de Tabuleiro para quem for jogar 
+        *<span style = 'color:#D7CF07;'>sozinho!!</span>*",
+        subtitle ="Os vinte melhores jogos com suas posições no 
+        *<span style = 'color:#D7CF07;'>ranking geral</span>* e 
+        *<span style = 'color:#D7CF07;'>notas médias</span>*",
+        y = "Ranking dos Jogos",
+        x = ""
+        ) +
+    theme_classic() +                                     # seleção do tema do gráfico.
+    scale_y_continuous(breaks = seq(1, 44, 2)) +                        # formatar escala do eixo x.
+    theme(                                                          # customizar:
+        panel.background = element_rect(fill = "#237CA9"),                       # fundo do gráfico.
+        plot.background = element_rect(fill = "#237CA9"),             # fundo da moldura retangular.
+        plot.margin = unit(c(1, 1, 1, -0.3), "cm"),                         # distância das margens.
+        plot.title = element_markdown(                                          # título do gráfico.
+            size = 32,  
+            face = "plain",    
+            family = "FrankyOutline",                                             # fonte do título.
+            hjust = 3,
+            margin = unit(c(0, 0, 0.5, 0), "cm")                                # margens do título.
+            ), 
+        plot.subtitle = element_markdown(
+            size = 10,
+            family = "LexieReadable",   
+            hjust = 0,
+            ),
+        text = element_text(                                                    # textos do gráfica.
+            family = "LexieReadable",    
+            color = "#FFFFFF",
+            size = 10,
+            hjust = 0,
+            face = "bold"
+            ),
+        axis.text.x = element_text(                                               # texto do eixo x.
+            color = "#FFFFFF",       
+            size = 7.5,
+            face = "bold",
+            margin = unit(c(0.3, 0, 0.5, 0), "cm")  
+            ),
+        axis.text.y = element_markdown(                                           # texto do eixo y.
+            color = "#FFFFFF",    
+            size = 9.5,
+            face = "bold",
+            family = "LexieReadable", 
+            ),
+      axis.ticks.x = element_line(color = "#1F1F1F"),                             # ticks do eixo x.
+      axis.line.x = element_line(color = "#1F1F1F"),                       # cor da linha do eixo x.
+      axis.ticks.y = element_line(color = "#1F1F1F"),                 # padrões dos ticks do eixo x.
+      axis.line.y = element_line(
+          color = "#000000",                                               # cor da linha do eixo x.
+          size = 0.4,
+          ),
+      axis.title = element_text(                                        # texto do título do eixo x.
+          face = "bold",    
+          size = 10,
+          hjust = 0.5,
+          ),
+      legend.position = "none"                                                   # exclui a legenda.
+      ) +
+    coord_flip() +                                                           # inverte o eixo x e y.
+    annotate( "text",
+               x = 16, y = 31, label = "Precisando jogar sozinho? 
+               Considerando o ranking, Gloomhavem é a
+               melhor indicação. Ele ocupa a 1ª  posição
+               no rankig geral entre jogos  de  tabuleiro
+               com a nota 8.51 e permite jogar  sozinho.",
+               color = "#C2D9FF", 
+               size = 3.4,
+               family = "LexieReadable",
+               fontface = "bold"
+        )
 
 ```
 
@@ -468,10 +466,10 @@ Quais seriam os jogos mais desejados e suas posições no *ranking*?
 Novamente considerou-se apenas os jogos com mais de 10000 avaliações.  O gráfico a seguir apresenta os vinte jogos mais desejados.
 
 ```{r grafico02 - Jogos para um jogador-b}
-#| echo = FALSE,
+#| echo = TRUE,
 #| fig.align = "center",
-#| fig.widht = 9,
-#| fig.height = 7,
+#| fig.widht = 9.5,
+#| fig.height = 7.5,
 #| out.width = 1500,
 #| out.height = 800
 
@@ -494,7 +492,7 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
     size = 1.5
     ) +
     geom_point(aes(color = year),                                                  # faz os círculos
-               size = 8.5,
+               size = 8.8,
                color = cor                     # a cor dos círculos são as definidas na paleta "cor"
     ) +
     geom_label(
@@ -502,7 +500,7 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
         alpha = 0,
         label.size = NA,                 # lobel.size = NA remove a moldura retangular sobre o label
         fontface = "bold",                                                           # fonte negrita
-        color = "#000000"                                                     # cor do label "preto"
+        color = "#FFFFFF"                                                     # cor do label "preto"
     ) +
     geom_curve(aes(                                   # define a linha curva para indicar a anotação
         x = 20.0,                                           # valor de x em que inicia a linha curva
@@ -515,7 +513,7 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
         length = unit(0.02, "npc")                                                 # tamanho da seta
     ),
     curvature = -0.6,                          # curvatura da linha curva ( se =0 torna-se uma reta)
-    color = "#8599EA"                                                           # cor da linha curva
+    color = "#C2D9FF"                                                           # cor da linha curva
     ) +
     labs(                                               # edita o texto do título, subtítulo e eixos
         title = "Jogos de Tabuleiro para quem for jogar *<span style = 'color:#FFC745;'>sozinho!!</span>*",
@@ -523,14 +521,14 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
         y = "Ranking dos Jogos",
         x = ""
     ) +
-    ggdark::dark_theme_classic() +                                   # tema escolhido para o gráfico
+    theme_classic() +                                   # tema escolhido para o gráfico
     scale_y_continuous(breaks = seq(0, 23000, 2000),
                        limits = c(0, 23000)) + # eixo y começa em 1, termina em 44 de 2 em 2
     theme(                                        # otimizamos o gráfico, alterando diversos fatores
         panel.grid.minor.y = element_blank(),                                         # tipo do grid
         panel.grid.major.y = element_blank(),
-        panel.background = element_rect(fill = "#1F1F1F"),                         # fundo do painel
-        plot.background = element_rect(fill = "#1F1F1F"),                      # mesmo fundo do plot
+        panel.background = element_rect(fill = "#237CA9"),                         # fundo do painel
+        plot.background = element_rect(fill = "#237CA9"),                      # mesmo fundo do plot
         plot.margin = unit(c(1, 1, 1, -0.4), "cm"),            # distância margens - (t r b l, unit)
         plot.title = element_markdown(
             size = 34.2,                                            # usamos o element tipo markdown
@@ -539,41 +537,47 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
             hjust = 3,
             margin = unit(c(0.3, -0.3, 0.5, -0,2), "cm")              # afasta o título do subtítulo
         ),                                                   # posição horizontal do texto do título
-        text = element_text(                                      # define os fatores para os textos
-            family = "LexieReadable",                         # define o tipo da fonte usada
-            color = "#38CF6D",
+        plot.subtitle = element_markdown(
+            size = 10,
+            family = "LexieReadable",   
+            hjust = 0,
+            ),
+        text = element_text(                                                    # textos do gráfica.
+            family = "LexieReadable",    
+            color = "#FFFFFF",
             size = 10,
             hjust = 0,
             face = "bold"
         ),
-        axis.text.x = element_text(
-            color = "#38CF6D",                                          # padrões do texto do eixo x
-            size = 8,
+        
+        axis.text.x = element_text(                                               # texto do eixo x.
+            color = "#FFFFFF",       
+            size = 7.5,
             face = "bold",
-            margin = unit(c(0.3, 0, 0.5, 0), "cm")    # afasta o texto do eixo x e do titulo do eixo
-        ),
-        axis.ticks.x = element_line(color = "white"),                  # padrões dos ticks do eixo x
-        axis.line.x = element_line(color = "white"),                          # eixo x na cor branca
-        axis.text.y = element_markdown(
-            color = "#FFFFFF",                                        # padrões das letras do eixo y
-            size = 9.5,
+            margin = unit(c(0.3, 0, 0.5, 0), "cm")  
+            ),
+        axis.text.y = element_markdown(                                           # texto do eixo y.
+            color = "#FFFFFF",    
+            size = 10,
             face = "bold",
             family = "LexieReadable", 
-        ),                                                                 
-        axis.ticks.y = element_line(color = "white"),                  # padrões dos ticks do eixo x
+            ),
+        axis.ticks.x = element_line(color = "#1F1F1F"),                           # ticks do eixo x.
+        axis.line.x = element_line(color = "#1F1F1F"),                     # cor da linha do eixo x.
+        axis.ticks.y = element_line(color = "#1F1F1F"),               # padrões dos ticks do eixo x.
         axis.line.y = element_line(
-            color = "white",                                                  # eixo y na cor branca
+            color = "#000000",                                             # cor da linha do eixo x.
             size = 0.4,
-        ),
-        axis.title = element_text(
-            face = "bold",                                    # padrões da letra do titulo do eixo x
-            size = 10,
-            hjust = 0.5,
-        ),
-        legend.position = "none"                                       # exclui a legenda do gráfico
+            ),
+        axis.title = element_text(                                        # texto do título do eixo x.
+          face = "bold",    
+          size = 10,
+          hjust = 0.5,
+          ),
+        legend.position = "none"                                      # exclui a legenda do gráfico.
     ) +
-    coord_flip() +                                                   # inverte o eixo x com o eixo y
-    annotate(                                                              # faz anotação no gráfico
+    coord_flip() +                                                  # inverte o eixo x com o eixo y.
+    annotate(                                                             # faz anotação no gráfico.
         "text",
         x = 4, y = 17000, label = "Ainda na dúvida? 
     Agora  temos  os  jogos  mais desejados  e seus
@@ -582,7 +586,7 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
     Gala Project e Nemesis da lista acima continuam 
     em destaque, mas Wingspan e Everdell precisam
     ser observados!                                                      ",
-        color = "#8599EA", size = 3.5,
+        color = "#C2D9FF", size = 3.5,
         family = "LexieReadable",
         fontface = "bold"
     )
