@@ -334,14 +334,14 @@ Nesta análise, considerou-se somente os 20 jogos melhores avaliados entre aquel
 #| out.width = 1500 ,
 #| out.height = 800,
 
-cor <- c(                                              # pallet de cores para os elementos gráficos.
-  "#C2D9FF", "#871607", "#081121", "#EA250B", "#30292F",
-  "#CCAA00", "#CB8589", "#811192", "#EF7B45", "#4BB3FD",
-  "#735CDD", "#BD2554", "#829DB0", "#0DF205", "#37000A",
-  "#201E1F", "#632A50", "#390099", "#F2542D", "#0A369D"
-)
+cor <- c(                                        # pallet de cores para os elementos gráficos.
+    "#C2D9FF", "#871607", "#081121", "#EA250B", "#30292F",
+    "#CCAA00", "#CB8589", "#811192", "#EF7B45", "#4BB3FD",
+    "#735CDD", "#BD2554", "#829DB0", "#0DF205", "#37000A",
+    "#201E1F", "#632A50", "#390099", "#F2542D", "#0A369D"
+    )
 
-jogos_tabuleiro |>    
+jogos_tabuleiro |>
     filter(users_rated >= 10000 & !is.na(rank) & min_players == 1) |>
     arrange(rank) |>                                                          # ordenar por ranking.
     slice_head(n = 20) |>                                               # vinte primeiros elementos.
@@ -391,7 +391,7 @@ jogos_tabuleiro |>
         y = "Ranking dos Jogos",
         x = ""
         ) +
-    theme_classic() +                                     # seleção do tema do gráfico.
+    theme_classic() +                                                  # seleção do tema do gráfico.
     scale_y_continuous(breaks = seq(1, 44, 2)) +                        # formatar escala do eixo x.
     theme(                                                          # customizar:
         panel.background = element_rect(fill = "#237CA9"),                       # fundo do gráfico.
@@ -453,7 +453,7 @@ jogos_tabuleiro |>
                size = 3.4,
                family = "LexieReadable",
                fontface = "bold"
-        )
+              )
 
 ```
 
@@ -473,77 +473,78 @@ Novamente considerou-se apenas os jogos com mais de 10000 avaliações.  O gráf
 #| out.width = 1500,
 #| out.height = 800
 
-jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo de jogadores igual a 1
+
+jogos_tabuleiro |>
     filter(users_rated >= 10000 & !is.na(rank) & min_players == 1) |>
-    arrange(desc(wishing)) |>                                    # ordenar do primeiro para o último
-    slice_head(n = 20) |>                                                  # pega os vinte primeiros
+    arrange(desc(wishing)) |>
+    slice_head(n = 20) |>
     ggplot(aes(
-        x = fct_reorder(name, wishing, .desc = FALSE),      # inverter a ordem das colunas no eixo y
+        x = fct_reorder(name, wishing, .desc = FALSE),          # reordenar as colunas como fatores.
         y = wishing,
         label = round(rank, 2)
-    )) +
+        )
+        )+
     geom_segment(aes(
-        x = fct_reorder(name, wishing, .desc = FALSE),                      # cria as linhas/colunas
+        x = fct_reorder(name, wishing, .desc = FALSE),                  # criar o elemento segmento.
         xend = name,
         y = 0,
         yend = wishing
     ),
-    color = cor,                         # a cor das linhas/colunas são as definidas na paleta "cor"
+    color = cor,         
     size = 1.5
     ) +
-    geom_point(aes(color = year),                                                  # faz os círculos
+    geom_point(aes(color = year),                                        # criar o elemento círculo.
                size = 8.8,
-               color = cor                     # a cor dos círculos são as definidas na paleta "cor"
+               color = cor                     
     ) +
-    geom_label(
-        size = 3,                      # definir os padrões do label (valores das médias bayesianas)
+    geom_label(                                                                 # formata os labels.
+        size = 3,    
         alpha = 0,
-        label.size = NA,                 # lobel.size = NA remove a moldura retangular sobre o label
-        fontface = "bold",                                                           # fonte negrita
-        color = "#FFFFFF"                                                     # cor do label "preto"
+        label.size = NA,
+        fontface = "bold",
+        color = "#FFFFFF"
     ) +
-    geom_curve(aes(                                   # define a linha curva para indicar a anotação
-        x = 20.0,                                           # valor de x em que inicia a linha curva
-        y = 19950,                                          # valor de y em que inicia a linha curva
-        xend = 7.2,                                        # valor de x em que termina a linha curva
-        yend = 19280                                       # valor de y em que termina a linha curva
+    geom_curve(aes(                                                  # formatar curva para anotação.
+        x = 20.0,
+        y = 19950,
+        xend = 7.2,
+        yend = 19280
     ),
-    arrow = arrow(                                               # cria a seta no fim da linha curva
-        type = "closed",                                                              # tipo da seta
-        length = unit(0.02, "npc")                                                 # tamanho da seta
+    arrow = arrow(                                                       # formatar a seta da curva.
+        type = "closed",                                                             
+        length = unit(0.02, "npc")
     ),
-    curvature = -0.6,                          # curvatura da linha curva ( se =0 torna-se uma reta)
-    color = "#C2D9FF"                                                           # cor da linha curva
+    curvature = -0.6,                                 # editar o texto do título, subtítulo e eixos.
+    color = "#C2D9FF"
     ) +
-    labs(                                               # edita o texto do título, subtítulo e eixos
-        title = "Jogos de Tabuleiro para quem for jogar *<span style = 'color:#FFC745;'>sozinho!!</span>*",
-        subtitle ="Os vinte jogos mais desejados com suas posições no ranking geral",
+    labs(                                             # editar o texto do título, subtítulo e eixos.
+        title = "Jogos de Tabuleiro para quem for jogar *<span style = 'color:#FFC745;'>
+        sozinho!!</span>*",
+        subtitle ="Os vinte jogos mais desejados com suas posições e ranking",
         y = "Ranking dos Jogos",
         x = ""
     ) +
-    theme_classic() +                                   # tema escolhido para o gráfico
+    theme_classic() +                                                  # seleção do tema do gráfico.
     scale_y_continuous(breaks = seq(0, 23000, 2000),
-                       limits = c(0, 23000)) + # eixo y começa em 1, termina em 44 de 2 em 2
-    theme(                                        # otimizamos o gráfico, alterando diversos fatores
-        panel.grid.minor.y = element_blank(),                                         # tipo do grid
-        panel.grid.major.y = element_blank(),
-        panel.background = element_rect(fill = "#237CA9"),                         # fundo do painel
-        plot.background = element_rect(fill = "#237CA9"),                      # mesmo fundo do plot
-        plot.margin = unit(c(1, 1, 1, -0.4), "cm"),            # distância margens - (t r b l, unit)
-        plot.title = element_markdown(
-            size = 34.2,                                            # usamos o element tipo markdown
-            face = "plain",                                                    # tiço da letra plain
-            family = "FrankyOutline",                                              # fonte do título
+                       limits = c(0, 23000)) +
+    theme(                                                     # customizar:
+        panel.background = element_rect(fill = "#237CA9"),                       # fundo do gráfico.
+        plot.background = element_rect(fill = "#237CA9"),             # fundo da moldura retangular.
+        plot.margin = unit(c(1, 1, 1, -0.4), "cm"),
+        plot.title = element_markdown(                                          # título do gráfico.
+            size = 34.2,
+            face = "plain",
+            family = "FrankyOutline",
             hjust = 3,
-            margin = unit(c(0.3, -0.3, 0.5, -0,2), "cm")              # afasta o título do subtítulo
-        ),                                                   # posição horizontal do texto do título
-        plot.subtitle = element_markdown(
+            margin = unit(c(0.3, -0.3, 0.5, -0,2), "cm")
+        ),
+        plot.subtitle = element_markdown(                                     # padrões do subítulo.
             size = 10,
-            family = "LexieReadable",   
+            family = "LexieReadable",
             hjust = 0,
             ),
         text = element_text(                                                    # textos do gráfica.
-            family = "LexieReadable",    
+            family = "LexieReadable",
             color = "#FFFFFF",
             size = 10,
             hjust = 0,
@@ -551,26 +552,26 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
         ),
         
         axis.text.x = element_text(                                               # texto do eixo x.
-            color = "#FFFFFF",       
+            color = "#FFFFFF",
             size = 7.5,
             face = "bold",
-            margin = unit(c(0.3, 0, 0.5, 0), "cm")  
+            margin = unit(c(0.3, 0, 0.5, 0), "cm")
             ),
         axis.text.y = element_markdown(                                           # texto do eixo y.
-            color = "#FFFFFF",    
+            color = "#FFFFFF",
             size = 10,
             face = "bold",
-            family = "LexieReadable", 
+            family = "LexieReadable",
             ),
         axis.ticks.x = element_line(color = "#1F1F1F"),                           # ticks do eixo x.
         axis.line.x = element_line(color = "#1F1F1F"),                     # cor da linha do eixo x.
         axis.ticks.y = element_line(color = "#1F1F1F"),               # padrões dos ticks do eixo x.
-        axis.line.y = element_line(
-            color = "#000000",                                             # cor da linha do eixo x.
+        axis.line.y = element_line(                                    # padrões da linha do eixo x.
+            color = "#000000",
             size = 0.4,
             ),
-        axis.title = element_text(                                        # texto do título do eixo x.
-          face = "bold",    
+        axis.title = element_text(                                      # texto do título do eixo x.
+          face = "bold",
           size = 10,
           hjust = 0.5,
           ),
@@ -579,11 +580,11 @@ jogos_tabuleiro |>       # filtrar por usuários que avaliaram > 5000 e mínimo 
     coord_flip() +                                                  # inverte o eixo x com o eixo y.
     annotate(                                                             # faz anotação no gráfico.
         "text",
-        x = 4, y = 17000, label = "Ainda na dúvida? 
+        x = 4, y = 17000, label = "Ainda na dúvida?
     Agora  temos  os  jogos  mais desejados  e seus
     rankings.  Observe  que ainda  os  jogos Scythe,
     Terraforming  Mars,  Gioomhaven,  Spirit Island,
-    Gala Project e Nemesis da lista acima continuam 
+    Gala Project e Nemesis da lista acima continuam
     em destaque, mas Wingspan e Everdell precisam
     ser observados!                                                      ",
         color = "#C2D9FF", size = 3.5,
@@ -612,13 +613,12 @@ avançadas, por este motivo os fabricantes informam a idade mínima recomendada 
 
 ```{r analise mais desejados por categoria e tempo minimo}
 #| echo = FALSE
-# 7) Grafico com novas variáveis --------------------------------------------------------------
 
 # Melhores jogos para jogar sozinho por tema, considerando o ranking, os mais desejados, menor tempo
 # médio de jogo
 
-# 7.1) Vamos separar a coluna description em outras 5 colunas
-jogos_tabuleiro_categoria <- jogos_tabuleiro |> 
+# Separar a coluna description em outras 5 colunas
+jogos_tabuleiro_categoria <- jogos_tabuleiro |>
     separate(col = board_game_category,
              into = c("category1",
                       "category2",
@@ -629,9 +629,9 @@ jogos_tabuleiro_categoria <- jogos_tabuleiro |>
         remove = TRUE
     )
 
-# 7.1) Vamos pivotar a base de wide para long e então analisar as categorias.
+# Pivotar a base de wide para long e então analisar as categorias.
 
-jogos_tabuleiro_categoria <- jogos_tabuleiro_categoria |> 
+jogos_tabuleiro_categoria <- jogos_tabuleiro_categoria |>
     pivot_longer(
         cols = c("category1", "category2", "category3",
                  "category4", "category5"),
@@ -641,9 +641,7 @@ jogos_tabuleiro_categoria <- jogos_tabuleiro_categoria |>
     )
 
 
-#os melhores por categoria
-
-## categoria - economic
+# Os melhores por categoria
 
 best_for_category <- function(.category_name) {
     jogos_tabuleiro_categoria |> 
@@ -654,14 +652,7 @@ best_for_category <- function(.category_name) {
         slice_max(wishing)
 }
 
-# second_best_for_category <- function(.category_name) {
-#     jogos_tabuleiro_categoria |> 
-#         select(name, min_play_time, wishing, category, rank, owned, min_players) |>
-#         filter(category == .category_name & min_play_time <=120 & min_players>=1 & owned >=5000) |> 
-#         arrange(desc(wishing)) |> 
-#         head(2) |> 
-#         slice_min(wishing) 
-# }
+# Inserção do nome do melhor jogo por categoria no gráfico
 
 anotar <- function(.best_category_name) {
     annotate("label",
@@ -679,6 +670,8 @@ anotar <- function(.best_category_name) {
     )
 }
 
+# Inserção do nome do jogo percente ao ranking geral
+
 anotar_1_ranking <- function(.name_game) {
     annotate("label",
              family = "LexiReadable",
@@ -694,6 +687,8 @@ anotar_1_ranking <- function(.name_game) {
              fontface = "bold"
     )
 }
+
+# Segunda opção do nome do jogo percente ao ranking geral para evitar sobreposição no gráfico
 
 anotar_2_ranking <- function(.name_game) {
     annotate("label",
@@ -711,7 +706,7 @@ anotar_2_ranking <- function(.name_game) {
     )
 }
 
-# categorias selecionadas
+# categorias selecionadas (Selecionamos algumas cateroiras)
 categorias <- c("Ancient", "Card Game", "City Building", "Civilization", "Economic",
                 "Trains", "Deduction", "Party Game", "Spies/Secret Agents",
                 "Word Game", "Environmental","Industry / Manufacturing", "Science Fiction",
@@ -720,7 +715,7 @@ categorias <- c("Ancient", "Card Game", "City Building", "Civilization", "Econom
                 "Educational", "Humor", "Bluffing", "Adventure", "Exploration", 
                 "Prehistoric", "Medical", "Modern Warfare", "Horror")
     
- # os melhores por categoria
+ # Obtenção dos melhores por categoria por meio da função best_for_category()
 
 best_ancient <- best_for_category(categorias[1])
 best_card_game <- best_for_category(categorias[2])
@@ -843,99 +838,113 @@ le_havre<- jogos_tabuleiro_categoria |>
 
 ```
 
+No gráfico abaixo, selecionamos 32 categorias de jogos. Ele apresenta a relação dos jogos mais desejados pelos usuários com o tempo máximo de duração indicado pela editora de 160 minutos, adquiridos por pelo menos 5000 pessoas e que permitem o jogo por um único jogador. Ele destaca os jogos mais desejados de cada categoria, como também alguns jogos to topo do ranking, mas que não estão nas primeiras posições entre os desejados em suas respectivas categorias.
 
 
 
 ```{r grafico jogos por categoria desejo ganhar presente e tempo minimo}
-#| echo = FALSE,
+#| echo = TRUE,
 #| fig.align="center",
 #| fig.width = 10,
 #| fig.height = 14.8,
 #| out.width = 1700,
 #| aut.height = 1800
 
-# seleção dos melhores por categoria, lista de desejo e tempo mínimo de jogo
-
-
 jogos_tabuleiro_categoria |> 
-    select(name, min_play_time, wishing, category, rank, owned, min_players, trading, min_play_time) |>
+    select(name, min_play_time,
+           wishing,
+           category, 
+           rank, 
+           owned, 
+           min_players, 
+           trading,
+           min_play_time) |>
     filter(category %in% categorias & min_play_time <=160 & min_players>=1 & owned >=5000) |> 
     arrange(desc(wishing)) |>
     ggplot() +
-    aes(x=wishing, y = category, color = min_play_time) +        # define o mapeamento de x, y e cor
+    aes(x=wishing,
+        y = category,
+        color = min_play_time) +
     geom_point(size = 3)+
-    labs(
-        title = "Jogos Destaques por Categoria para Jogar *<span style = 'color:#FFC745;'>sozinho!!</span>*",
-         subtitle = "Os mais desejados por categoria, desejo de ganhar como presente e tempo mínimo de jogo",
-         x = "Número de Pessoas que Desejam o Jogo",           # define o texto para o titulo eixo x
-         y = "")+                                  # define o texto para o título do eixo y
-    scale_x_continuous(breaks = seq(0, 20000,5000),            # eixo x - minimo, máximo e intervalo
+    labs(                                                      # texto de título, subtítulo e eixos.
+    title = "Jogos Destaques por Categoria para Jogar*<span style = 'color:#FFC745;'>sozinho!!
+    </span>*",
+    subtitle = "Por categoria, desejo de ganhar como presente e tempo mínimo de jogo",
+    x = "Número de Pessoas que Desejam o Jogo",                                 
+    y = "")+                                                                    
+    scale_x_continuous(breaks = seq(0, 20000,5000),                                # padrões eixo x.
                        limits = c(0,20000))+
-    scale_y_discrete(labels = str_wrap(categorias, width = 15))+ # wrap -dica do prof. Julio na aula
-    ggdark::dark_theme_classic() +                                             # tema para o gráfico
-    theme(                                                       # altera as características do tema
-        panel.background = element_rect(fill = "#002642"),                        # fundo do gráfico
-        plot.background = element_rect(fill = "#1F1F1F"),             # mesmo fundo do frame externo
-        plot.margin = unit(c(1, 1, 1, -0.3), "cm"),     # aumenta a distância do gráfico das margens
-        plot.title = element_markdown(
-            size = 42,                                              # usamos o element tipo markdown
-            face = "plain",                                                    # tiço da letra plain
-            family = "FrankyOutline",                                              # fonte do título
+    scale_y_discrete(labels = str_wrap(                            # quebra do texto y com str_wrap.
+        categorias,
+        width = 15))+                                              
+    theme_classic() +                                                         # tema para o gráfico.
+    theme(                                                       # customiza:
+        panel.background = element_rect(fill = "#002642"),                       # fundo do gráfico.
+        plot.background = element_rect(fill = "#237CA9"),                  # fundo do frame externo.
+        plot.margin = unit(c(1, 1, 1, -0.3), "cm"),                            # margens do gráfico.
+        plot.title = element_markdown(                                          # padrões do título.
+            size = 42,
+            face = "plain",
+            family = "FrankyOutline",
             hjust = 1,
             margin = unit(c(0.2, 0, 0.5, 0), "cm")
-        ),                                                   # posição horizontal do texto do título
-        plot.subtitle = element_text(                             # define os fatores para os textos
-            color = "#38CF6D",
+        ),                                                   
+        plot.subtitle = element_markdown(                                    # padrões do subtitulo.
+            color = "#FFFFFF",
             size = 12,
             hjust = 0,
             face = "bold"
         ),
-        text = element_text(                                      # define os fatores para os textos
-            family = "LexieReadable",                         # define o tipo da fonte usada
-            color = "#38CF6D",
+        text = element_text(                                       # padrões dos elementos de texto.
+            family = "LexieReadable",                         
+            color = "#FFFFFF",
             size = 10,
             hjust = 0,
             face = "bold"
         ),
-        axis.text.x = element_text(
-            color = "#38CF6D",                                          # padrões do texto do eixo x
+        axis.text.x = element_text(                                    # padrões do texto do eixo x.
+            color = "#FFFFFF",                                          
             size = 8,
             face = "bold",
-            margin = unit(c(0.3, 0, 0.5, 0.5), "cm"), # afasta o texto do eixo x e do titulo do eixo
-            family = "LexieReadable",                                 # define o tipo da fonte usada
+            margin = unit(c(0.3, 0, 0.5, 0.5), "cm"),
+            family = "LexieReadable",
         ),
-        axis.ticks.x = element_line(color = "white"),                  # padrões dos ticks do eixo x
-        axis.line.x = element_line(color = "white"),                          # eixo x na cor branca
-        axis.text.y = element_text(
-            family = "LexieReadable",                                 # define o tipo da fonte usada
-            color = "#FFFFFF",                                        # padrões das letras do eixo y
+        axis.ticks.x = element_line(color = "#000000"),               # padrões dos ticks do eixo x.
+        axis.line.x = element_line(color = "#000000"),                       # eixo x na cor branca.
+        axis.text.y = element_text(                                    # padrões do texto do eixo y.
+            family = "LexieReadable",
+            color = "#FFFFFF",
             size = 11,
             face = "bold",
-            margin = unit(c(0, 0.3, 0.3, 0), "cm"),   # afasta o texto do eixo y e do titulo do eixo
+            margin = unit(c(0, 0.3, 0.3, 0), "cm"),
         ),                                                                 
-        axis.ticks.y = element_line(color = "white"),                  # padrões dos ticks do eixo x
+        axis.ticks.y = element_line(color = "#000000"),               # padrões dos ticks do eixo y.
         axis.line.y = element_line(
-            color = "white",                                                  # eixo y na cor branca
+            color = "#000000",
             size = 0.4,
         ),
-        axis.title.x = element_text(
-            face = "bold",                                    # padrões da letra do titulo do eixo x
+        axis.title.x = element_text(                         # padrões da letra do titulo do eixo x.
+            face = "bold",                                    
             size = 11,
             hjust = 0.5,
         ),
-        legend.title = element_text(size = 9.2, color = "#FFFFFF", face = "bold", family = "arial"),
-        legend.position = c(0.80,.89),
-        
-        legend.background = element_rect(fill = "#1F1F1F"),
-        legend.text = element_text(size = 6, color = "#FFFFFF", face = "bold"),
-        legend.direction = "horizontal"
+        legend.title = element_text(size = 9.2,            # padrões da texto do  titulo da legenda.
+                                    color = "#FFFFFF", 
+                                    face = "bold", 
+                                    family = "arial"),
+        legend.position = c(0.80,.89),                  # posição da legenda para dentro do gráfico.
+        legend.background = element_rect(fill = "#237CA9"),       # padrões para o fundo da legenda.
+        legend.text = element_text(size = 6,                          # padrões do texto da legenda.
+                                   color = "#FFFFFF",
+                                   face = "bold"),
+        legend.direction = "horizontal"                                        # posição da legenda.
     )+
-    scale_color_gradient(low = "#F68DA0",            # parâmetros da legenda "tempo mínimo de jogo"
+    scale_color_gradient(low = "#F68DA0",                 # padrões do escala do gradiente de cores.
                           # mid = "#FF708F",
                           high = "#840B21", 
                           # midpoint =11000,
-                          name = "tempo mínimo")+                         # altera o nome da legenda
-    anotar(best_ancient)+                                            # inseri anotação "nome do jogo
+                          name = "tempo mínimo")+                        # altera o nome da legenda.
+    anotar(best_ancient)+        # chama a função anotar para inserir os nomes dos jogos no gráfico.
     anotar(best_card_game)+
     anotar(best_city_building)+
     anotar(best_civilization)+
@@ -978,18 +987,46 @@ jogos_tabuleiro_categoria |>
     anotar_1_ranking(caverna_the_caves_farmers)+
     anotar_1_ranking(the_7_continent)+
     anotar_1_ranking(le_havre)+
-    annotate("rect", xmin = 13400, xmax = 20000, ymin = 28, ymax = 32 ,       # Anotações da legenda
-             fill = "#1F1F1F", color = "#1F1F1F", alpha = 1)+
-    annotate("rect", xmin = 18700, xmax = 19600, ymin = 30, ymax = 30.6,
-             fill = "#C1EEFF", alpha = 1, color = "#1F1F1F", size = 0.3)+
-    annotate("rect", xmin = 18700, xmax = 19600, ymin = 30.6, ymax = 31.2,
-             fill = "#FFEFB8", alpha = 1, color = "#000000", size = 0.3)+
-    annotate("text", x = 16100, y = 30.7, label = "mais desejados por categoria",
+    annotate("rect",                                         # cria retângulo ao redor das legendas.
+             xmin = 13400, 
+             xmax = 20000, 
+             ymin = 28, 
+             ymax = 32 ,
+             fill = "#237CA9",
+             color = "#FFFFFF", 
+             alpha = 1)+
+    annotate("rect",                   # cria retângulo para legenda "mais desejados por categoria".
+             xmin = 18700, 
+             xmax = 19600, 
+             ymin = 30, 
+             ymax = 30.6,
+             fill = "#C1EEFF", 
+             alpha = 1, 
+             color = "#1F1F1F", 
+             size = 0.3)+
+    annotate("rect",                      # cria retângulo para legenda "melhores no ranking geral".
+             xmin = 18700, 
+             xmax = 19600, 
+             ymin = 30.6, 
+             ymax = 31.2,
+             fill = "#FFEFB8", 
+             alpha = 1, 
+             color = "#000000", 
+             size = 0.3)+
+    annotate("text",                         # cria texto da legenda "mais desejados por categoria".
+             x = 16100, 
+             y = 30.7, 
+             label = "mais desejados por categoria",
              color = "#FFFFFF", family = "arial",
-             size = 3.2, fontface = "bold")+
-    annotate("text", x = 16350, y = 30.1, label = "melhores no ranking geral",
+             size = 3.2, 
+             fontface = "bold")+
+    annotate("text",                            # cria texto da legenda "melhores no ranking geral".
+             x = 16350, 
+             y = 30.1, 
+             label = "melhores no ranking geral",
              color = "#FFFFFF", family = "arial",
-             size = 3.2, fontface = "bold")
+             size = 3.2,
+             fontface = "bold")
 
 ```
 
