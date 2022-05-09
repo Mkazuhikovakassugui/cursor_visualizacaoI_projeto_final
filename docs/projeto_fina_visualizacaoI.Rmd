@@ -5,7 +5,7 @@ date: '2022-04-29'
 
 output: 
   html_document:
-    highlight: arrow
+    highlight: espresso
     code_folding: hide
     self_contained: true
     theme: lumen
@@ -63,6 +63,8 @@ library(ggtext)
 library(stringr)
 library(kableExtra)
 library(ggrepel)
+library(shiny)
+library(plotly)
 ```
 
 
@@ -314,7 +316,7 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 </table>
 
 
-## Melhores do Ranking e sua notas médias.
+# Melhores do Ranking e sua notas médias.
 
 <div align=justify style="text-indent: 3em;"> Assim como os jogos digitais alguns jogos de tabuleiro permitem que a partida seja realizada por apenas um jogador que pode aproveitar os momentos em que está só, fugir de toda tecnologia e se aventurar em um jogo de tabuleiro. 
 
@@ -457,7 +459,7 @@ jogos_tabuleiro |>
 
 ```
 
-## O mais desejados e seus *rankings*
+# O mais desejados e seus *rankings*
 
 <div align=justify style="text-indent: 3em;">Entenda por desejados como aqueles jogos em que os avaliadores expressaram seu desejo de ganhá-los, ou seja, colocariam em suas *wishlists* (listas de desejos).
 
@@ -609,7 +611,7 @@ avançadas, por este motivo os fabricantes informam a idade mínima recomendada 
 
 </div>
 
-## Jogos por Categoria
+# Jogos por Categoria
 
 ```{r analise mais desejados por categoria e tempo minimo}
 #| echo = FALSE
@@ -841,7 +843,6 @@ le_havre<- jogos_tabuleiro_categoria |>
 No gráfico abaixo, selecionamos 32 categorias de jogos. Ele apresenta a relação dos jogos mais desejados pelos usuários com o tempo máximo de duração indicado pela editora de 160 minutos, adquiridos por pelo menos 5000 pessoas e que permitem o jogo por um único jogador. Ele destaca os jogos mais desejados de cada categoria, como também alguns jogos to topo do ranking, mas que não estão nas primeiras posições entre os desejados em suas respectivas categorias.
 
 
-
 ```{r grafico jogos por categoria desejo ganhar presente e tempo minimo}
 #| echo = TRUE,
 #| fig.align="center",
@@ -1031,8 +1032,184 @@ jogos_tabuleiro_categoria |>
 ```
 
 
+# Idade mínima
+
+Como escolher o melhor "solo game" considerando a idade mínima do jogador. Analisaremos quais os jogos disponiveis por faixa etária e categoria. 
+
+Forneça os dados para visualizar quais opções existem:
 
 
+```{r Categoria e idade minima - dados}
+#| echo = FALSE
+
+# Função retorna dados filtrados considerando tempo mínimo de jogo, mínimo de jogdores, mínimo
+# adquiridos e idade mínima
+best_for_category_ages<- function(.category_name) {
+    jogos_tabuleiro_categoria |> 
+        select(name,
+               min_play_time,
+               wishing,
+               category,
+               rank,
+               owned, 
+               min_players, 
+               min_age) |>
+        filter(category == .category_name & min_play_time <=160 & min_players>=1 & owned >=5000) 
+}
+
+```
+
+```{r select input - idade minima e categoria}
+#| echo = TRUE,
+#| fig.align="center",
+#| fig.width = 10,
+#| fig.height = 14.8,
+#| out.width = 1700,
+#| aut.height = 1800
+
+fluidPage(
+    sidebarLayout(
+             sidebarPanel(width = 12.0,
+                 sliderInput(
+                     inputId = "idade_minima",
+                     label = "Informe a idade mínima do jogador",
+                     min = min(jogos_tabuleiro_categoria$min_age, na.rm = TRUE),
+                     max = 30,
+                     step = 1,
+                     value = 16,
+                     sep = " ",
+                     width = "300px"
+                     ),
+                 selectInput(
+                     inputId = "categoria_jogo",
+                     label = "Forneça a categoria do jogo",
+                     choices = c("Abstract Strategy",
+                                 "Adventure", 
+                                 "Ancient", 
+                                 "Animals", 
+                                 "Bluffing",
+                                 "Card Game", 
+                                 "City Building",
+                                 "Civilization",
+                                 "Deduction",
+                                 "Dice",
+                                 "Economic",
+                                 "Environmental", 
+                                 "Exploration", 
+                                 "Fantasy",
+                                 "Farming", 
+                                 "Fighting",
+                                 "Horror", 
+                                 "Medical",
+                                 "Movies / TV / Radio theme",
+                                 "Party Game", 
+                                 "Science Fiction", 
+                                 "Space Exploration", 
+                                 "Trains"),
+                     width = "300px"
+                     )
+                 ),
+             mainPanel = mainPanel(
+                 fluidRow(
+                     column(
+                         width = 12,
+                         offset = 0,
+                         output$p1 <- renderPlotly({
+                             jogos_tabuleiro_categoria |> 
+                                 select(name,
+                                        min_play_time, 
+                                        wishing, 
+                                        category, 
+                                        rank, 
+                                        owned, 
+                                        min_players, 
+                                        min_age) |>
+                                 filter(category == input$categoria_jogo &
+                                            min_play_time <=2000 &
+                                            min_players >=1 &
+                                            owned >=5000 & 
+                                            min_age <= input$idade_minima) |>
+                                 group_by(min_age) |>
+                                 arrange(desc(wishing)) |> 
+                                 head(100) |> 
+                                 ggplot(aes(x = rank, y = wishing, color = min_play_time, label = name))+
+                                 geom_point() +
+                                 theme_classic()+
+                                 labs(
+                                     title = "JOGOS MAIS DESEJADOS POR IDADE PARA JOGAR <span style = 'color:#D7CF07;'>SOZINHO!!</span>",
+                                     subtitle = "Relação de jogos por<span style = 'color:#D7CF07;'>ranking</span> e <span style = 'color:#D7CF07;'>idades</span>",
+                                     x = "Ranking",
+                                     y = "Quantidade de usuários que desejam o jogo
+                                     "
+                                     )+
+                                 theme(
+                                     panel.background = element_rect(fill = "#FFFFFF"),
+                                     plot.background = element_rect(fill = "#237CA9"), 
+                                     plot.margin = unit(c(1.5, 1, 1, 1), "cm"),   
+                                     plot.title = element_markdown(           
+                                         size = 14,
+                                         face = "plain",
+                                         family = "FrankyOutline",   
+                                         hjust = 0.5
+                                         ),
+                                     plot.subtitle = element_markdown(
+                                         size = 10,
+                                         family = "LexieReadable",
+                                         hjust = 0,
+                                         color = "#000000"
+                                         ),
+                                     text = element_text(     
+                                         family = "LexieReadable",
+                                         color = "#000000",
+                                         size = 10,
+                                         hjust = 0,
+                                         face = "bold"
+                                         ),
+                                     axis.text.x = element_text(  
+                                         color = "#FFFFFF",
+                                         size = 8,
+                                         face = "plain"
+                                         ),
+                                     axis.text.y = element_markdown( 
+                                        color = "#FFFFFF",
+                                        size = 8,
+                                        face = "plain",
+                                        family = "LexieReadable"
+                                        ),
+                                     axis.title = element_text(
+                                         size = 9,
+                                         hjust = 0.5
+                                         ),
+                                     legend.title = element_text(size = 9.2,
+                                                                 color = "#FFFFFF",
+                                                                 face = "bold", 
+                                                                 family = "arial"),
+                                     legend.background = element_rect(fill = "#237CA9"), 
+                                     legend.text = element_text(size = 6,
+                                                                color = "#FFFFFF",
+                                                                face = "bold"),
+                                     )+
+                                 scale_color_gradient(name = "tempo mínimo")+  
+                                 scale_y_continuous(breaks = seq(0, 20000, 2000))+  
+                                 scale_x_continuous(breaks = seq(0, 22000, 2000)) 
+                             }
+                         ),
+                         output$t1 <- renderText(
+                             glue::glue("O intervalo de idades selecionado de 0 a {input$idade_minima}")
+                         )
+                     )
+                 ),
+                 width = 0
+             )
+            
+         )
+    )
+
+ 
+   
+
+
+```
 
 
 

@@ -15,6 +15,7 @@ library(ggtext)
 library(kableExtra)
 library(knitr)
 library(ggrepel)
+library(plotly)
 
 # 2) Leitura da Base de Dados -----------------------------------------------------------------
 
@@ -371,7 +372,7 @@ jogos_tabuleiro_categoria <- jogos_tabuleiro_categoria |>
 
 best_for_category <- function(.category_name) {
     jogos_tabuleiro_categoria |> 
-        select(name, min_play_time, wishing, category, rank, owned, min_players) |>
+        select(name, min_play_time, wishing, category, rank, owned, min_players, min_age) |>
         filter(category == .category_name & min_play_time <=160 & min_players>=1 & owned >=5000) |> 
         arrange(desc(wishing)) |> 
         head(2) |>
@@ -642,4 +643,93 @@ jogos_tabuleiro_categoria |>
     anotar_1_ranking(a_feast_for_odin)+
     anotar_1_ranking(wingspan)+
     anotar_2_ranking(everdell)
+
+
+# Gráfico considerando a faixa etária ---------------------------------------------------------
+
+best_for_category_ages<- function(.category_name) {
+    jogos_tabuleiro_categoria |> 
+        select(name, min_play_time, wishing, category, rank, owned, min_players, min_age) |>
+        filter(category == .category_name & min_play_time <=160 & min_players>=1 & owned >=5000) 
+}
+
+idade_minima <- 30
+jogos_age <- jogos_tabuleiro_categoria |> 
+    select(name, min_play_time, wishing, category, rank, owned, min_players, min_age) |>
+    filter(category == "Economic" & min_play_time <=2000 & min_players >=1 & owned >=1000 & min_age <= idade_minima) |>
+    group_by(min_age) |>
+    arrange(desc(wishing)) |> 
+    head(100) |> View()
+
+p_age <- jogos_age |> 
+    ggplot(aes(x = rank, y = wishing, color = min_age, label = name))+
+    geom_point() +
+    theme_classic()+
+    labs(
+        title = "Jogos mais desejados por <span style = 'color:#D7CF07;'>ranking geral</span> e <span style = 'color:#D7CF07;'>notas médias</span>",
+        x = "Ranking",
+        y = "Quantidade de usuários que desejam o jogo
+        "
+    )+
+    
+    theme(
+        panel.background = element_rect(fill = "#FFFFFF"),                       # fundo do gráfico.
+        plot.background = element_rect(fill = "#237CA9"),             # fundo da moldura retangular.
+        plot.margin = unit(c(1, 1, 1, 1), "cm"),                         # distância das margens.
+        plot.title = element_markdown(                                          # título do gráfico.
+            size = 14,
+            face = "plain",
+            family = "FrankyOutline",                                             # fonte do título.
+            hjust = 0.5
+        ),
+        plot.subtitle = element_markdown(
+            size = 10,
+            family = "LexieReadable",
+            hjust = 1,
+        ),
+        text = element_text(                                                    # textos do gráfica.
+            family = "LexieReadable",
+            color = "#000000",
+            size = 10,
+            hjust = 0,
+            face = "bold"
+        ),
+        axis.text.x = element_text(                                               # texto do eixo x.
+            color = "#FFFFFF",
+            size = 6,
+            face = "plain"
+        ),
+        axis.text.y = element_markdown(                                           # texto do eixo y.
+            color = "#FFFFFF",
+            size = 6,
+            face = "plain",
+            family = "LexieReadable"
+        ),
+        axis.title = element_text(                                        # texto do título do eixo x.
+            face = "bold",    
+            size = 8,
+            hjust = 0.5
+        ),
+        legend.title = element_text(size = 9.2,            # padrões da texto do  titulo da legenda.
+                                    color = "#FFFFFF", 
+                                    face = "bold", 
+                                    family = "arial"),
+        legend.background = element_rect(fill = "#237CA9"),       # padrões para o fundo da legenda.
+        legend.text = element_text(size = 6,                          # padrões do texto da legenda.
+                                   color = "#FFFFFF",
+                                   face = "bold"),
+        
+    )+
+    scale_color_gradient(name = "tempo mínimo")+                         # altera o nome da legenda.
+    scale_y_continuous(breaks = seq(0, 20000, 2000))+                   # formatar escala do eixo x.
+    scale_x_continuous(breaks = seq(0, 800, 100))                       # formatar escala do eixo x.
+    
+
+ggplotly(p_age)
+    
+    
+
+
+
+
 
