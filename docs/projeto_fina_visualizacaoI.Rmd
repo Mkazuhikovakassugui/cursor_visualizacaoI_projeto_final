@@ -315,8 +315,12 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 </tbody>
 </table>
 
+</div>
 
-# Melhores do Ranking e sua notas médias.
+# Análises
+
+
+## Melhores do Ranking e sua notas médias.
 
 <div align=justify style="text-indent: 3em;"> Assim como os jogos digitais alguns jogos de tabuleiro permitem que a partida seja realizada por apenas um jogador que pode aproveitar os momentos em que está só, fugir de toda tecnologia e se aventurar em um jogo de tabuleiro. 
 
@@ -459,7 +463,7 @@ jogos_tabuleiro |>
 
 ```
 
-# O mais desejados e seus *rankings*
+## O mais desejados e seus *rankings*
 
 <div align=justify style="text-indent: 3em;">Entenda por desejados como aqueles jogos em que os avaliadores expressaram seu desejo de ganhá-los, ou seja, colocariam em suas *wishlists* (listas de desejos).
 
@@ -611,7 +615,7 @@ avançadas, por este motivo os fabricantes informam a idade mínima recomendada 
 
 </div>
 
-# Jogos por Categoria
+## Jogos por Categoria
 
 ```{r analise mais desejados por categoria e tempo minimo}
 #| echo = FALSE
@@ -840,8 +844,8 @@ le_havre<- jogos_tabuleiro_categoria |>
 
 ```
 
-No gráfico abaixo, selecionamos 32 categorias de jogos. Ele apresenta a relação dos jogos mais desejados pelos usuários com o tempo máximo de duração indicado pela editora de 160 minutos, adquiridos por pelo menos 5000 pessoas e que permitem o jogo por um único jogador. Ele destaca os jogos mais desejados de cada categoria, como também alguns jogos to topo do ranking, mas que não estão nas primeiras posições entre os desejados em suas respectivas categorias.
-
+<div align=justify style="text-indent: 3em;">No gráfico abaixo, selecionamos 32 categorias de jogos. Ele apresenta a relação dos jogos mais desejados pelos usuários com o tempo máximo de duração indicado pela editora de 160 minutos, adquiridos por pelo menos 5000 pessoas e que permitem o jogo por um único jogador. Ele destaca os jogos mais desejados de cada categoria, como também alguns jogos to topo do ranking, mas que não estão nas primeiras posições entre os desejados em suas respectivas categorias.
+</div>
 
 ```{r grafico jogos por categoria desejo ganhar presente e tempo minimo}
 #| echo = TRUE,
@@ -1032,9 +1036,10 @@ jogos_tabuleiro_categoria |>
 ```
 
 
-# Idade mínima
+## Idade mínima
 
-Como escolher o melhor "solo game" considerando a idade mínima do jogador. Analisaremos quais os jogos disponiveis por faixa etária e categoria. 
+<div align=justify style="text-indent: 3em;">Como escolher o melhor "solo game" considerando a idade mínima do jogador. Analisaremos quais os jogos disponiveis por faixa etária e categoria. 
+</div>
 
 Forneça os dados para visualizar quais opções existem:
 
@@ -1068,19 +1073,20 @@ best_for_category_ages<- function(.category_name) {
 #| aut.height = 1800
 
 fluidPage(
-    sidebarLayout(
-             sidebarPanel(width = 12.0,
-                 sliderInput(
+    theme = bslib::bs_theme(bootswatch = "united"),             # alterar a aparência do aplicativo.
+    sidebarLayout(                                                          # usar o layout sidebar.
+             sidebarPanel(width = 12.0,                                # largura do painel de input.
+                 sliderInput(                                  # recebe intervalo idade pelo slider.
                      inputId = "idade_minima",
                      label = "Informe a idade mínima do jogador",
                      min = min(jogos_tabuleiro_categoria$min_age, na.rm = TRUE),
-                     max = 30,
+                     max = 30,                     # idade mínima máxima da base = 25, definimos 30.
                      step = 1,
-                     value = 16,
+                     value = 8,                             # valor inicial escolhido para o slider.
                      sep = " ",
-                     width = "300px"
+                     width = "300px"                          # largura do slider dentro do sidebar.
                      ),
-                 selectInput(
+                 selectInput(                              # recebe a categoria do jogo pelo select.
                      inputId = "categoria_jogo",
                      label = "Forneça a categoria do jogo",
                      choices = c("Abstract Strategy",
@@ -1106,15 +1112,15 @@ fluidPage(
                                  "Science Fiction", 
                                  "Space Exploration", 
                                  "Trains"),
-                     width = "300px"
+                     width = "300px"                    # largura do select input dentro do sidebar.
                      )
                  ),
-             mainPanel = mainPanel(
+             mainPanel = mainPanel(width = 12,                        # largura do painel principal.
                  fluidRow(
                      column(
-                         width = 12,
+                         width = 12,                       # largura da coluna ocupada no mainPanel.
                          offset = 0,
-                         output$p1 <- renderPlotly({
+                         output$p1 <- renderPlotly({                          # renderiza o gráfico.
                              jogos_tabuleiro_categoria |> 
                                  select(name,
                                         min_play_time, 
@@ -1132,34 +1138,31 @@ fluidPage(
                                  group_by(min_age) |>
                                  arrange(desc(wishing)) |> 
                                  head(100) |> 
-                                 ggplot(aes(x = rank, y = wishing, color = min_play_time, label = name))+
+                                 ggplot(aes(x = rank, 
+                                            y = wishing, 
+                                            color = min_play_time,
+                                            label = name
+                                            )
+                                        )+
                                  geom_point() +
                                  theme_classic()+
                                  labs(
-                                     title = "JOGOS MAIS DESEJADOS POR IDADE PARA JOGAR <span style = 'color:#D7CF07;'>SOZINHO!!</span>",
-                                     subtitle = "Relação de jogos por<span style = 'color:#D7CF07;'>ranking</span> e <span style = 'color:#D7CF07;'>idades</span>",
+                                     title = "JOGOS MAIS DESEJADOS POR IDADE PARA JOGAR 
+<span style = 'color:#D7CF07;'>SOZINHO!!</span>",
                                      x = "Ranking",
                                      y = "Quantidade de usuários que desejam o jogo
                                      "
                                      )+
-                                 theme(
+                                 theme(                  # customiza o gráfico nos elementos abaixo.
                                      panel.background = element_rect(fill = "#FFFFFF"),
                                      plot.background = element_rect(fill = "#237CA9"), 
                                      plot.margin = unit(c(1.5, 1, 1, 1), "cm"),   
                                      plot.title = element_markdown(           
-                                         size = 14,
+                                         size = 12,
                                          face = "plain",
-                                         family = "FrankyOutline",   
                                          hjust = 0.5
                                          ),
-                                     plot.subtitle = element_markdown(
-                                         size = 10,
-                                         family = "LexieReadable",
-                                         hjust = 0,
-                                         color = "#000000"
-                                         ),
                                      text = element_text(     
-                                         family = "LexieReadable",
                                          color = "#000000",
                                          size = 10,
                                          hjust = 0,
@@ -1174,7 +1177,6 @@ fluidPage(
                                         color = "#FFFFFF",
                                         size = 8,
                                         face = "plain",
-                                        family = "LexieReadable"
                                         ),
                                      axis.title = element_text(
                                          size = 9,
@@ -1194,30 +1196,20 @@ fluidPage(
                                  scale_x_continuous(breaks = seq(0, 22000, 2000)) 
                              }
                          ),
-                         output$t1 <- renderText(
-                             glue::glue("O intervalo de idades selecionado de 0 a {input$idade_minima}")
+                         output$t1 <- renderText(                      # renderiza o texto na saída.
+                             glue::glue("O intervalo de 0 a {input$idade_minima} anos")
                          )
                      )
-                 ),
-                 width = 0
+                 )
              )
             
          )
     )
 
- 
-   
-
-
 ```
 
 
-
-
-
-
-
-<br><br><br>
+# Descrição dos jogos
 
 
 Com base nos dados analisados, listei abaixo 10 jogos que constam nas relações de 20 melhores rankings e 20 mais desejados.
@@ -1280,20 +1272,21 @@ selecao01 <- jogos_tabuleiro |>               # seleção das colunas com as inf
 selecao01                                                               # mostra a tabela no retório
 ```
 
-<br><br>
+<br>
 
 <div align=justify style="text-indent: 3em;"> Abaixo você pode encontrar a descrição destes jogos, segundo a base de dados. Selecione o nome do jogo para ler a descrição completa segundo a base de dados *"Board Games"*:
+</div>
 
 
 ```{r sidebarlayout input nome output descricao}
 #| echo: FALSE
 
 fluidPage(                                      # selecionar o nome do filme para acesso à descrição
-    h4("Descrição do Jogo de Tabuleiro",
-       style = "color: #00121F;
-       background:#E9EBED;
-       width:455px;
-       line-height: 2.5;"),
+    # h4("Descrição do Jogo de Tabuleiro",
+    #    style = "color: #00121F;
+    #    background:#E9EBED;
+    #    width:455px;
+    #    line-height: 2.5;"),
     sidebarLayout(                                    # input dos dados à esquerda e saída à direita
         sidebarPanel = sidebarPanel(width = 7.0,          # painel para o input dos nomes dos filmes
             div(style = "margin-right: 35px; 
@@ -1326,9 +1319,9 @@ fluidPage(                                      # selecionar o nome do filme par
                 column(
                     width = 8.5,
                     offset = 0,
-                    div(style = "background-color:#00121F;
+                    div(style = "background-color:#FFFFFF;
                         width:850px;
-                        color:#FFFFFF;
+                        color:#000000;
                         font-weight:normal;
                         line-height:1.8",
                         output$tab1 <- renderTable(                                 # renderiza a tabela
@@ -1352,5 +1345,19 @@ fluidPage(                                      # selecionar o nome do filme par
 
 
 ```
+
+
+# Material de Apoio
+
+- Temas para RMarkdown por [Andrew Ziefler](https://www.datadreaming.org/post/r-markdown-theme-gallery/)
+- Personalização de tabelas com kableExtra por [Hao Zhu](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html)
+- Livro sobre R - [Ciência de dados em R - Curso R](https://livro.curso-r.com/)
+- Zen do R - Formas simples de melhorar a organização de projetos - [Caio Lente + Curso-R](https://curso-r.github.io/zen-do-r/)
+- Livro sobre Shiny - [O'Reilly Media](https://mastering-shiny.org/index.html)
+
+- Paletas para seleção de cores - [coolors](https://coolors.co/fcfafa-c8d3d5-a4b8c4-6e8387-0cca4a)
+
+
+# Conclusão
 
 
