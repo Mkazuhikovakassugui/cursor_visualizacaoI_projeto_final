@@ -366,6 +366,7 @@ jogos_tabuleiro_categoria <- jogos_tabuleiro_categoria |>
     )
 
 
+
 #7.2) os melhores por categoria
 
 ## categoria - economic
