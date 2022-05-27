@@ -1,5 +1,6 @@
 ---
 title: 'Jogos de Tabuleiro "Solo"'
+subtitle: "Curso de Visualização I - Curso-R"
 author: "Marcio Vakassugui"
 date: '2022-04-29'
 
@@ -40,13 +41,13 @@ knitr::include_graphics("https://www.deveserisso.com.br/blog/wp-content/uploads/
 
 # Contexto
 
-<div align=justify style="text-indent: 3em;"> Durante a pandemia de covid-19 e em plena era dos jogos "*digitais*", observa-se uma crescente procura pelos chamados jogos *"analógicos"*, jogos de mesa e de tabuleiro, que retornaram às prateiras das lojas e *sites* especializados. Segundo dados da [*Euromonitor International*](https://www.dicebreaker.com/categories/board-game/news/games-and-puzzles-market-2020-2021), empresa britânica de pesquisa de mercado,  a combinação de tempo livre e nostalgia fez com que os europeus voltassem a procurá-los como opção de entretenimento. No Brasil, este comportamento também se repete. O mercado de brinquedos e jogos tradicionais aumentou de 1% do período pré-pandêmico para 3,16% em 2022.
+<div align=justify style="text-indent: 3em;"> Durante a pandemia da covid-19 e em plena era dos jogos "digitais", observa-se uma crescente procura pelos chamados jogos "analógicos", jogos de mesa e de tabuleiro, que retornaram às prateiras das lojas e *sites* especializados. Segundo dados da *Euromonitor International*, empresa britânica de pesquisa de mercado,  a combinação de tempo livre e nostalgia fez com que os europeus voltassem a procurá-los como opção de entretenimento. No Brasil, este comportamento também se repete. O mercado de brinquedos e jogos tradicionais aumentou de 1% do período pré-pandêmico para 3,16% em 2022.
 
-Há notícias de que famosos jogos de *consoles* *Xbox* e *Playstation* como [*"Assassin's Creed"*](https://olhardigital.com.br/2022/03/17/games-e-consoles/jogo-de-tabuleiro-de-assassins-creed-sera-lancado-em-2022/) e [*"The Elder Scrolls 5: Skyrim"*](https://canaltech.com.br/games/the-elder-scrolls-5-skyrim-tera-jogo-de-tabuleiro-em-2022-200773/)  tenham suas versões de tabuleiro lançadas em 2022.
+Isto tem mexido com indústria de "games" eletrônicos e de mesa, tanto que jogos como [*"Assassin's  Creed"*](https://olhardigital.com.br/2022/03/17/games-e-consoles/jogo-de-tabuleiro-de-assassins-creed-sera-lancado-em-2022/) e [*"The Elder Scrolls 5: Skyrim"*](https://canaltech.com.br/games/the-elder-scrolls-5-skyrim-tera-jogo-de-tabuleiro-em-2022-200773/), ambos disponíveis em *Xbox* e *Playstation*, terão suas versões de tabuleiro lançadas em 2022.
 
-O trabalho final do curso de Visualizações-I, da Curso-R, tem por objetivo analisar um *dataset* e construir visualizações gráficas a partir de seus dados. Uma das sugestões do curso foi a base "*Board Games*", disponibilizada pelo *Kaggle* e utilizada pelo *Tidytuesday* em um de seus eventos semanais que desafiam os usuários da linguagem R a construirem visualizações sobre um tema e assim promover discussões saudáveis. Decidi usá-la para a elaboração deste trabalho.
+Este trabalho de conclusão do curso tem o objetivo de analisar um *dataset* e construir visualizações gráficas a partir de seus dados. Uma das sugestões do curso foi a base "*Board Games*", disponibilizada pelo *Kaggle* e utilizada pelo *Tidytuesday* em um de seus eventos semanais que desafiam os usuários da linguagem R a construirem visualizações sobre um tema e assim promover discussões saudáveis. Decidi usá-la para a elaboração deste trabalho.
 
-Exploraremos os dados e construiremos as visualizações para os chamados **"Solo Board Games"**, aqueles que permitem partidas com apenas um jogador. Destacaremos os jogos que se diferenciam segundo critérios como as melhores médias na avaliações de usuários, a posição no ranking dos melhores jogos e os mais citados nas listas de desejos.
+Exploraremos os dados e construiremos as visualizações para os chamados **"Solo Board Games"**, aqueles que permitem partidas com apenas um jogador. Destacaremos os jogos desta categoria que se diferenciam segundo critérios como: as melhores médias na avaliações de usuários, a posição no ranking dos melhores jogos, os mais citados nas listas de desejos e nas listas de mais procurados, os mais comprados e a faixa etária de acordo com a base analisada.
 
 
 </div>
@@ -65,6 +66,7 @@ library(kableExtra)
 library(ggrepel)
 library(shiny)
 library(plotly)
+source("../R/funcoes_jogos.R")
 ```
 
 
@@ -79,7 +81,7 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 
 # Descrição das variáveis
 
-<div align=justify style="text-indent: 3em;"> A base *"Board Games"* é composta pelos arquivos *"ratings"* e *"details"*, que trazem informações sobre jogos de tabuleiros como:
+<div align=justify style="text-indent: 3em;"> A base *"Board Games"* é composta pelos arquivos *"ratings"* e *"details"* que trazem as seguintes variáveis:
 </div>
 
 <style type="text/css">
@@ -321,7 +323,7 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 
 </div>
 <br>
-<div align=justify style="text-indent: 3em;"> Após a junção das bases, obtivemos um *dataset* com `r nrow(jogos_tabuleiro)` linhas e `r ncol(jogos_tabuleiro)` variáveis de jogos de tabuleiros de diversos temas, durações, faixas etárias e mecânica de jogos.
+<div align=justify style="text-indent: 3em;"> Após a união destas bases, obtivemos um *dataset* com `r nrow(jogos_tabuleiro)` linhas e `r ncol(jogos_tabuleiro)` variáveis de jogos com diversos temas, durações, mecânicas de jogos e com diferentes faixas etárias.
 
 
 </div>
@@ -332,13 +334,11 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 
 ## Melhores do Ranking e sua notas médias.
 
-<div align=justify style="text-indent: 3em;"> Assim como os jogos digitais alguns jogos de tabuleiro permitem que a partida seja realizada por apenas um jogador que pode aproveitar os momentos em que está só, fugir de toda tecnologia e se aventurar em um jogo de tabuleiro. 
+<div align=justify style="text-indent: 3em;"> Assim como os jogos digitais, alguns jogos de tabuleiro permitem que a partida seja realizada por apenas um jogador, o qual pode aproveitar momentos em que se encontra só para fugir da tecnologia e viver uma divertida aventura. 
 
-Apresentarei as opções mais procuradas, desejadas e compradas dos jogos de acordo com a base *Board Game* no seuinte gráfico conhecido como *"lollipop plot"*, um tipo de um gráfico de barras em que as barras são substitúidas por uma linha e um círulo em sua extremidade.
+No seguinte gráfico, conhecido como *"lollypop plot"*, temos os jogos com as melhores avaliações ordenados pela sua posição no ranking geral, que considera as notas médias bayesianas.
 
-Estes jogos permitem que o jogador participe de sessões do jogo sozinho ou com mais jogadores. Estão ordenados pela sua posição no ranking geral entre os jogos e trazem as respectivas notas médias bayesianas.
-
-Nesta análise, considerou-se somente os 20 jogos melhores avaliados entre aqueles com no mínimo 10.000 avaliações.
+Relacionamos apenas os 20 jogos melhores avaliados entre aqueles com no mínimo 10.000 avaliações.
 
 </div>
 
@@ -362,12 +362,17 @@ jogos_tabuleiro |>
     arrange(rank) |>                                                      # ordenar por ranking.
     slice_head(n = 20) |>                                           # vinte primeiros elementos.
     ggplot(aes(
-        x = fct_reorder(name, rank, .desc = TRUE),          # reordenar as colunas como fatores.
+        x = fct_reorder(name,
+                        rank,
+                        .desc = TRUE
+                        ),                                 # reordenar as colunas como fatores.
         y = rank,
         label = round(bayes_average, 2)
         )
         ) +
-    geom_segment(aes(x = fct_reorder(name, rank, .desc = TRUE),     # criar o elemento segmento.
+    geom_segment(aes(x = fct_reorder(name,
+                                     rank,
+                                     .desc = TRUE),                # criar o elemento segmento.
                      xend = name,
                      y = 0,
                      yend = rank
@@ -387,9 +392,9 @@ jogos_tabuleiro |>
         color = "#FFFFFF"  
         ) +
     geom_curve(aes(y = 2.5,                                      # formatar curva para anotação.
-                   x = 20.2,  
-                   xend = 17.9,     
-                   yend = 24.2   
+                   x = 20,  
+                   xend = 17,     
+                   yend = 25   
                    ),
                arrow = arrow(                                        # formatar a seta da curva.
                  type = "closed",          
@@ -401,32 +406,31 @@ jogos_tabuleiro |>
     labs(                                         # editar o texto do título, subtítulo e eixos.
         title = "Jogos de Tabuleiro para quem for jogar 
         *<span style = 'color:#D7CF07;'>sozinho!!</span>*",
-        subtitle ="Os vinte melhores jogos com suas posições no 
-        *<span style = 'color:#D7CF07;'>ranking geral</span>* e 
-        *<span style = 'color:#D7CF07;'>notas médias</span>*",
+        subtitle ="Os vinte melhores jogos com suas posições no ranking geral e notas médias",
         y = "Ranking dos Jogos",
         x = ""
         ) +
     theme_classic() +                                              # seleção do tema do gráfico.
-    scale_y_continuous(breaks = seq(1, 44, 2)) +                    # formatar escala do eixo x.
+    scale_y_continuous(breaks = seq(1, 46, 2),                      # formatar escala do eixo x.
+                       limits = c(0,46)) +                    
     theme(                                                          # customizar:
         panel.background = element_rect(fill = "#237CA9"),                   # fundo do gráfico.
         plot.background = element_rect(fill = "#237CA9"),         # fundo da moldura retangular.
-        plot.margin = unit(c(1, 1, 1, -0.3), "cm"),                     # distância das margens.
+        plot.margin = unit(c(1, 2, 1, 0), "cm"),                     # distância das margens.
         plot.title = element_markdown(                                      # título do gráfico.
-            size = 32,  
+            size = 18,  
             face = "plain",    
-            family = "FrankyOutline",                                         # fonte do título.
-            hjust = 3,
-            margin = unit(c(0, 0, 0.5, 0), "cm")                            # margens do título.
+            family = "",                                                      # fonte do título.
+            hjust = 0,
+            margin = unit(c(0, 0, 0.5, 0.5), "cm")                          # margens do título.
             ), 
-        plot.subtitle = element_markdown(
+        plot.subtitle = element_text(
             size = 10,
-            family = "LexieReadable",   
+            family = "",   
             hjust = 0,
             ),
         text = element_text(                                                # textos do gráfica.
-            family = "LexieReadable",    
+            family = "",    
             color = "#FFFFFF",
             size = 10,
             hjust = 0,
@@ -438,11 +442,12 @@ jogos_tabuleiro |>
             face = "bold",
             margin = unit(c(0.3, 0, 0.5, 0), "cm")  
             ),
-        axis.text.y = element_markdown(                                       # texto do eixo y.
+        axis.text.y = element_text(                                           # texto do eixo y.
             color = "#FFFFFF",    
             size = 9.5,
             face = "bold",
-            family = "LexieReadable", 
+            family = "", 
+            margin = unit(c(0, 0.5, 0, 0.5), "cm")
             ),
       axis.ticks.x = element_line(color = "#1F1F1F"),                         # ticks do eixo x.
       axis.line.x = element_line(color = "#1F1F1F"),                   # cor da linha do eixo x.
@@ -460,14 +465,15 @@ jogos_tabuleiro |>
       ) +
     coord_flip() +                                                       # inverte o eixo x e y.
     annotate( "text",
-               x = 16, y = 31, label = "Precisando jogar sozinho? 
+               x = 15, y = 33, label = " 
                Considerando o ranking, Gloomhavem é a
                melhor indicação. Ele ocupa a 1ª  posição
-               no rankig geral entre jogos  de  tabuleiro
-               com a nota 8.51 e permite jogar  sozinho.",
+               no rankig geral entre jogos  de  tabuleiro  
+               com a nota 8.51.                                          
+              ",
                color = "#C2D9FF", 
-               size = 3.4,
-               family = "LexieReadable",
+               size = 3.2,
+               family = "",
                fontface = "bold"
               )
 
@@ -475,34 +481,38 @@ jogos_tabuleiro |>
 
 ## O mais desejados e seus *rankings*
 
-<div align=justify style="text-indent: 3em;">Entenda por desejados como aqueles jogos em que os avaliadores expressaram seu desejo de ganhá-los, ou seja, colocariam em suas *wishlists* (listas de desejos).
+<div align=justify style="text-indent: 3em;">Entende-se por mais desejados aqueles jogos que os avaliadores expressaram sua vontade de ganhá-los, ou seja, colocaram-nos em suas *wishlists* (listas de desejos).
 
-Quais seriam os jogos mais desejados e suas posições no *ranking*?
-
-Novamente considerou-se apenas os jogos com mais de 10000 avaliações.  O gráfico a seguir apresenta os vinte jogos mais desejados.
+O gráfico a seguir apresenta os vinte jogos mais desejados, considerando aqueles com mais de 10000 avaliações.
 
 </div>
 
 ```{r grafico02 - Jogos para um jogador-b}
 #| echo = TRUE,
-#| fig.align = "center",
-#| fig.widht = 9.5,
-#| fig.height = 7.5,
-#| out.width = 1500,
-#| out.height = 800
+#| fig.align="center",
+#| fig.width = 9,
+#| fig.height = 7,
+#| out.width = 1500 ,
+#| out.height = 800,
 
 jogos_tabuleiro |>
     filter(users_rated >= 10000 & !is.na(rank) & min_players == 1) |>
     arrange(desc(wishing)) |>
     slice_head(n = 20) |>
     ggplot(aes(
-        x = fct_reorder(name, wishing, .desc = FALSE),      # reordenar as colunas como fatores.
+        x = fct_reorder(name,
+                        wishing,
+                        .desc = FALSE
+                                    ),                     # reordenar as colunas como fatores.
         y = wishing,
         label = round(rank, 2)
         )
         )+
     geom_segment(aes(
-        x = fct_reorder(name, wishing, .desc = FALSE),              # criar o elemento segmento.
+        x = fct_reorder(name,
+                        wishing,
+                        .desc = FALSE
+                        ),                                          # criar o elemento segmento.
         xend = name,
         y = 0,
         yend = wishing
@@ -511,7 +521,7 @@ jogos_tabuleiro |>
     size = 1.5
     ) +
     geom_point(aes(color = year),                                    # criar o elemento círculo.
-               size = 8.8,
+               size = 8.5,
                color = cor                     
     ) +
     geom_label(                                                             # formata os labels.
@@ -522,16 +532,16 @@ jogos_tabuleiro |>
         color = "#FFFFFF"
     ) +
     geom_curve(aes(                                              # formatar curva para anotação.
-        x = 20.0,
-        y = 19950,
-        xend = 7.2,
-        yend = 19280
+        x = 20,
+        y = 21000,
+        xend = 6,
+        yend = 19200
     ),
     arrow = arrow(                                                   # formatar a seta da curva.
         type = "closed",                                                             
         length = unit(0.02, "npc")
     ),
-    curvature = -0.6,                             # editar o texto do título, subtítulo e eixos.
+    curvature = -0.4,                             # editar o texto do título, subtítulo e eixos.
     color = "#C2D9FF"
     ) +
     labs(                                         # editar o texto do título, subtítulo e eixos.
@@ -542,26 +552,26 @@ jogos_tabuleiro |>
         x = ""
     ) +
     theme_classic() +                                              # seleção do tema do gráfico.
-    scale_y_continuous(breaks = seq(0, 23000, 2000),
-                       limits = c(0, 23000)) +
+    scale_y_continuous(breaks = seq(0, 27000, 2000),
+                       limits = c(0, 27000)) +
     theme(                                                    # customizar:
         panel.background = element_rect(fill = "#237CA9"),                   # fundo do gráfico.
         plot.background = element_rect(fill = "#237CA9"),         # fundo da moldura retangular.
-        plot.margin = unit(c(1, 1, 1, -0.4), "cm"),
+        plot.margin = unit(c(1, 1, 1, -0.3), "cm"),
         plot.title = element_markdown(                                      # título do gráfico.
-            size = 34.2,
+            size = 18,
             face = "plain",
-            family = "FrankyOutline",
-            hjust = 3,
-            margin = unit(c(0.3, -0.3, 0.5, -0,2), "cm")
+            family = "",
+            hjust = 0,
+            margin = unit(c(0, 0, 0.5, 0), "cm")
         ),
-        plot.subtitle = element_markdown(                                 # padrões do subítulo.
+        plot.subtitle = element_text   (                                  # padrões do subítulo.
             size = 10,
-            family = "LexieReadable",
+            family = "",
             hjust = 0,
             ),
         text = element_text(                                                # textos do gráfica.
-            family = "LexieReadable",
+            family = "",
             color = "#FFFFFF",
             size = 10,
             hjust = 0,
@@ -574,11 +584,11 @@ jogos_tabuleiro |>
             face = "bold",
             margin = unit(c(0.3, 0, 0.5, 0), "cm")
             ),
-        axis.text.y = element_markdown(                                       # texto do eixo y.
+        axis.text.y = element_text    (                                       # texto do eixo y.
             color = "#FFFFFF",
-            size = 10,
+            size = 9.5,
             face = "bold",
-            family = "LexieReadable",
+            family = "",
             ),
         axis.ticks.x = element_line(color = "#1F1F1F"),                       # ticks do eixo x.
         axis.line.x = element_line(color = "#1F1F1F"),                 # cor da linha do eixo x.
@@ -597,35 +607,20 @@ jogos_tabuleiro |>
     coord_flip() +                                              # inverte o eixo x com o eixo y.
     annotate(                                                         # faz anotação no gráfico.
         "text",
-        x = 4, y = 17000, label = "Ainda na dúvida?
+        x = 3.5, y = 19800, label = "
     Agora  temos  os  jogos  mais desejados  e seus
-    rankings.  Observe  que ainda  os  jogos Scythe,
-    Terraforming  Mars,  Gioomhaven,  Spirit Island,
-    Gala Project e Nemesis da lista acima continuam
-    em destaque, mas Wingspan e Everdell precisam
-    ser observados!                                                      ",
-        color = "#C2D9FF", size = 3.5,
-        family = "LexieReadable",
+    rankings.  Observe  que os  jogos Scythe,           
+    Terraforming  Mars,  Gloomhaven,  Spirit Island, 
+    Gaia Project e Nemesis continuam em destaque,
+    mas Wingspan e Everdell também se                  
+    sobressaíram!                                                      
+    ",
+        color = "#C2D9FF", size = 3.1,
+        family = "",
         fontface = "bold"
     )
 ```
 
-<div align=justify style="text-indent: 3em;"> Entretanto, vimos que nem todos os jogos do topo do *ranking* são os mais desejados pelos usuários. Fatores como preço, tempo mínimo de jogo, categoria, mecânica do jogo, faixa etária afetam o desejo de ganhar o jogo.
-
-
-<p>Nos gráficos que seguirão, consideraremos que:</p>
-<ul class = "a">
-
-<li> Um tema que não chama a atenção do jogador o torna desinteressante, é preciso escolher bem entre os vários temas disponiveis como aventura, terror, médico, animais, ficção científica e até inspirados em outras obras como livros;  </li>
-
-<li> O tempo de jogo é importante para quem joga sozinho, então  um jogo que demore em média 4 horas talvez não seja o que você deseja; </li>
-
-<li> Se quem vai jogar é uma criança, deve-se observar a idade mínima. Muitos jogos exigem um raciocínio analítico e uso de estratégias;</li>
-avançadas, por este motivo os fabricantes informam a idade mínima recomendada e  
-
-<li> A "rejogabilidade", ou seja, jogar novamente com novas aventuras, é importante. Então prefira aqueles com extensões de jogos.</li>
-
-</div>
 
 ## Jogos por Categoria
 
@@ -634,6 +629,18 @@ avançadas, por este motivo os fabricantes informam a idade mínima recomendada 
 
 # Melhores jogos para jogar sozinho por tema, considerando o ranking, os mais desejados,
 # menor tempo, médio de jogo
+
+# Os melhores por categoria
+
+best_for_category <- function(.category_name) {
+    jogos_tabuleiro_categoria |> 
+        select(name, min_play_time, wishing, category, rank, owned, min_players) |>
+        filter(category == .category_name & min_play_time <=160 & min_players ==1 & owned >=500)|> 
+        arrange(desc(wishing)) |> 
+        head(2) |>
+        slice_max(wishing)
+}
+
 
 # Separar a coluna description em outras 5 colunas
 jogos_tabuleiro_categoria <- jogos_tabuleiro |>
@@ -659,72 +666,8 @@ jogos_tabuleiro_categoria <- jogos_tabuleiro_categoria |>
     )
 
 
-# Os melhores por categoria
 
-best_for_category <- function(.category_name) {
-    jogos_tabuleiro_categoria |> 
-        select(name, min_play_time, wishing, category, rank, owned, min_players) |>
-        filter(category == .category_name & min_play_time <=160 & min_players>=1 & owned >=5000)|> 
-        arrange(desc(wishing)) |> 
-        head(2) |>
-        slice_max(wishing)
-}
-
-# Inserção do nome do melhor jogo por categoria no gráfico
-
-anotar <- function(.best_category_name) {
-    annotate("label",
-             family = "LexiReadable",
-             x = .best_category_name$wishing,
-             y = .best_category_name$category,
-             label = .best_category_name$name,
-             hjust = -0.2,
-             vjust = 0.5,
-             size = 3.2,
-             color = "#000000",
-             fill = "#FFEFB8",
-             alpha = 1,
-             fontface = "bold"
-    )
-}
-
-# Inserção do nome do jogo percente ao ranking geral
-
-anotar_1_ranking <- function(.name_game) {
-    annotate("label",
-             family = "LexiReadable",
-             x = .name_game$wishing,
-             y = .name_game$category,
-             label = .name_game$name,
-             hjust = 1,
-             vjust = -0.5,
-             size = 3.2,
-             color = "#000000",
-             fill = "#C1EEFF",
-             alpha = 1,
-             fontface = "bold"
-    )
-}
-
-# Segunda opção do nome do jogo percente ao ranking geral para evitar sobreposição no gráfico
-
-anotar_2_ranking <- function(.name_game) {
-    annotate("label",
-             family = "LexiReadable",
-             x = .name_game$wishing,
-             y = .name_game$category,
-             label = .name_game$name,
-             hjust = 1,
-             vjust = 1.4,
-             size = 3.2,
-             color = "#000000",
-             fill = "#C1EEFF",
-             alpha = 1,
-             fontface = "bold"
-    )
-}
-
-# categorias selecionadas (Selecionamos algumas cateroiras)
+# categorias selecionadas (Selecionamos algumas categorias)
 categorias <- c("Ancient", 
                 "Card Game",
                 "City Building",
@@ -765,7 +708,8 @@ best_ancient <- best_for_category(categorias[1])
 best_card_game <- best_for_category(categorias[2])
 best_city_building <- best_for_category(categorias[3])
 best_civilization <- best_for_category(categorias[4])
-best_trains<- best_for_category(categorias[6])
+best_economic <- best_for_category(categorias[5])
+best_trains <- best_for_category(categorias[6])
 best_deduction <- best_for_category(categorias[7])
 best_party_game <- best_for_category(categorias[8])
 best_spies_secrets_agents <- best_for_category(categorias[9])
@@ -783,12 +727,14 @@ best_fantasy <- best_for_category(categorias[20])
 best_abstract_strategy <- best_for_category(categorias[21])
 best_puzzle <- best_for_category(categorias[22])
 best_dice <- best_for_category(categorias[23])
+best_movie <- best_for_category(categorias[24])
 best_educational <- best_for_category(categorias[25])
 best_humor <- best_for_category(categorias[26])
 best_bluffing <- best_for_category(categorias[27])
 best_adventure <- best_for_category(categorias[28])
 best_exploration <- best_for_category(categorias[29])
 best_prehistoric <- best_for_category(categorias[30])
+best_medical <- best_for_category(categorias[31])
 best_modern_warfare <- best_for_category(categorias[32])
 best_horror <- best_for_category(categorias[33])
 
@@ -882,7 +828,7 @@ le_havre<- jogos_tabuleiro_categoria |>
 
 ```
 
-<div align=justify style="text-indent: 3em;">No gráfico abaixo, selecionamos 32 categorias de jogos. Ele apresenta a relação dos jogos mais desejados pelos usuários com o tempo máximo de duração indicado pela editora de 160 minutos, adquiridos por pelo menos 5000 pessoas e que permitem o jogo por um único jogador. Ele destaca os jogos mais desejados de cada categoria, como também alguns jogos to topo do ranking, mas que não estão nas primeiras posições entre os desejados em suas respectivas categorias.
+<div align=justify style="text-indent: 3em;">O gráfico abaixo, com 33 categorias de jogos, contém a relação dos jogos mais desejados pelos usuários com tempo máximo de duração de 160 minutos, adquiridos por mais de 5000 pessoas (legenda amarela) e os jogos do topo do ranking citados anteriormente (legenda azul), mas que não estão entre os mais desejados em suas categorias.
 </div>
 
 ```{r grafico jogos por categoria desejo ganhar presente e tempo minimo}
@@ -902,7 +848,7 @@ jogos_tabuleiro_categoria |>
            min_players, 
            trading,
            min_play_time) |>
-    filter(category %in% categorias & min_play_time <=160 & min_players>=1 & owned >=5000) |> 
+    filter(category %in% categorias & min_play_time <=160 & min_players ==1) |> 
     arrange(desc(wishing)) |>
     ggplot() +
     aes(x=wishing,
@@ -910,36 +856,33 @@ jogos_tabuleiro_categoria |>
         color = min_play_time) +
     geom_point(size = 3)+
     labs(                                                  # texto de título, subtítulo e eixos.
-    title = "Jogos Destaques por Categoria para Jogar*<span style = 'color:#FFC745;'>sozinho!!
+    title = "Jogos Destaques por Categoria para Jogar *<span style = 'color:#FFC745;'>sozinho!!
     </span>*",
     subtitle = "Por categoria, desejo de ganhar como presente e tempo mínimo de jogo",
     x = "Número de Pessoas que Desejam o Jogo",                                 
     y = "")+                                                                    
-    scale_x_continuous(breaks = seq(0, 20000,5000),                            # padrões eixo x.
-                       limits = c(0,20000))+
-    scale_y_discrete(labels = str_wrap(                        # quebra do texto y com str_wrap.
-        categorias,
-        width = 15))+                                              
+    scale_x_continuous(breaks = seq(0, 20600, 5000),                            # padrões eixo x.
+                       limits = c(0, 20600))+
     theme_classic() +                                                     # tema para o gráfico.
     theme(                                                       # customiza:
         panel.background = element_rect(fill = "#002642"),                   # fundo do gráfico.
         plot.background = element_rect(fill = "#237CA9"),              # fundo do frame externo.
         plot.margin = unit(c(1, 1, 1, -0.3), "cm"),                        # margens do gráfico.
         plot.title = element_markdown(                                      # padrões do título.
-            size = 42,
+            size = 24,
             face = "plain",
-            family = "FrankyOutline",
-            hjust = 1,
+            family = "",
+            hjust = 0,
             margin = unit(c(0.2, 0, 0.5, 0), "cm")
         ),                                                   
-        plot.subtitle = element_markdown(                                # padrões do subtitulo.
-            color = "#FFFFFF",
+        plot.subtitle = element_text (                                   # padrões do subtitulo.
+            color = "#FFFFFF", 
             size = 12,
             hjust = 0,
             face = "bold"
         ),
         text = element_text(                                   # padrões dos elementos de texto.
-            family = "LexieReadable",                         
+            family = "",                         
             color = "#FFFFFF",
             size = 10,
             hjust = 0,
@@ -950,12 +893,12 @@ jogos_tabuleiro_categoria |>
             size = 8,
             face = "bold",
             margin = unit(c(0.3, 0, 0.5, 0.5), "cm"),
-            family = "LexieReadable",
+            family = "",
         ),
         axis.ticks.x = element_line(color = "#000000"),           # padrões dos ticks do eixo x.
         axis.line.x = element_line(color = "#000000"),                   # eixo x na cor branca.
         axis.text.y = element_text(                                # padrões do texto do eixo y.
-            family = "LexieReadable",
+            family = "",
             color = "#FFFFFF",
             size = 11,
             face = "bold",
@@ -974,8 +917,8 @@ jogos_tabuleiro_categoria |>
         legend.title = element_text(size = 9.2,        # padrões da texto do  titulo da legenda.
                                     color = "#FFFFFF", 
                                     face = "bold", 
-                                    family = "arial"),
-        legend.position = c(0.80,.89),              # posição da legenda para dentro do gráfico.
+                                    family = ""),
+        legend.position = c(0.78,.86),              # posição da legenda para dentro do gráfico.
         legend.background = element_rect(fill = "#237CA9"),   # padrões para o fundo da legenda.
         legend.text = element_text(size = 6,                      # padrões do texto da legenda.
                                    color = "#FFFFFF",
@@ -1016,31 +959,30 @@ jogos_tabuleiro_categoria |>
     anotar(best_prehistoric)+
     anotar(best_modern_warfare)+
     anotar(best_horror)+
+    anotar(best_humor)+
     anotar_1_ranking(terraforming_mars)+
     anotar_1_ranking(gloomhaven)+
     anotar_1_ranking(gloomhaven_jaws_of_the_lion)+
     anotar_2_ranking(gaia_project)+
     anotar_1_ranking(nemesis)+
     anotar_1_ranking(a_feast_for_odin)+
-    anotar_1_ranking(wingspan)+
     anotar_2_ranking(everdell)+
     anotar_2_ranking(scythe)+
     anotar_1_ranking(pandemic)+
     anotar_1_ranking(dune_imperium)+
     anotar_1_ranking(caverna_the_caves_farmers)+
     anotar_1_ranking(the_7_continent)+
-    anotar_1_ranking(le_havre)+
     annotate("rect",                                     # cria retângulo ao redor das legendas.
-             xmin = 13400, 
-             xmax = 20000, 
+             xmin = 13150, 
+             xmax = 20600, 
              ymin = 28, 
              ymax = 32 ,
              fill = "#237CA9",
              color = "#FFFFFF", 
              alpha = 1)+
     annotate("rect",               # cria retângulo para legenda "mais desejados por categoria".
-             xmin = 18700, 
-             xmax = 19600, 
+             xmin = 18900, 
+             xmax = 19900, 
              ymin = 30, 
              ymax = 30.6,
              fill = "#C1EEFF", 
@@ -1048,8 +990,8 @@ jogos_tabuleiro_categoria |>
              color = "#1F1F1F", 
              size = 0.3)+
     annotate("rect",                  # cria retângulo para legenda "melhores no ranking geral".
-             xmin = 18700, 
-             xmax = 19600, 
+             xmin = 18900, 
+             xmax = 19900, 
              ymin = 30.6, 
              ymax = 31.2,
              fill = "#FFEFB8", 
@@ -1060,14 +1002,14 @@ jogos_tabuleiro_categoria |>
              x = 16100, 
              y = 30.7, 
              label = "mais desejados por categoria",
-             color = "#FFFFFF", family = "arial",
+             color = "#FFFFFF", family = "",
              size = 3.2, 
              fontface = "bold")+
     annotate("text",                        # cria texto da legenda "melhores no ranking geral".
              x = 16350, 
              y = 30.1, 
              label = "melhores no ranking geral",
-             color = "#FFFFFF", family = "arial",
+             color = "#FFFFFF", family = "",
              size = 3.2,
              fontface = "bold")
 
@@ -1076,9 +1018,8 @@ jogos_tabuleiro_categoria |>
 
 ## Idade mínima
 
-<div align=justify style="text-indent: 3em;">Como escolher o melhor "solo game" considerando a idade mínima do jogador. Analisaremos quais os jogos disponiveis por faixa etária e categoria. 
-
-Forneça os dados para visualizar quais opções existem:
+<div align=justify style="text-indent: 3em;">
+Para encontrar os jogos para jogadores "solo" com duração mínima inferior a 160 minutos disponíveis por idade, forneça a categoria e a idade para visualizar quais opções existem entre os mais desejados e sua posição no ranking de notas:
 
 </div>
 
@@ -1120,36 +1061,41 @@ fluidPage(
                      min = min(jogos_tabuleiro_categoria$min_age, na.rm = TRUE),
                      max = 30,                 # idade mínima máxima da base = 25, definimos 30.
                      step = 1,
-                     value = 8,                         # valor inicial escolhido para o slider.
+                     value = 16,                         # valor inicial escolhido para o slider.
                      sep = " ",
                      width = "450px"                      # largura do slider dentro do sidebar.
                      ),
                  selectInput(                          # recebe a categoria do jogo pelo select.
                      inputId = "categoria_jogo",
                      label = "Forneça a categoria do jogo",
-                     choices = c("Abstract Strategy",
-                                 "Adventure", 
-                                 "Ancient", 
-                                 "Animals", 
-                                 "Bluffing",
-                                 "Card Game", 
+                     choices = c("Ancient", 
+                                 "Card Game",
                                  "City Building",
-                                 "Civilization",
-                                 "Deduction",
-                                 "Dice",
+                                 "Civilization", 
                                  "Economic",
-                                 "Environmental", 
-                                 "Exploration", 
-                                 "Fantasy",
-                                 "Farming", 
+                                 "Deduction", 
+                                 "Spies/Secret Agents",
+                                 "Word Game",
+                                 "Science Fiction",
+                                 "Animals",
+                                 "Farming",
+                                 "Renaissance",
                                  "Fighting",
-                                 "Horror", 
-                                 "Medical",
+                                 "Miniatures",
+                                 "Fantasy",
+                                 "Abstract Strategy",
+                                 "Puzzle",
+                                 "Dice", 
                                  "Movies / TV / Radio theme",
-                                 "Party Game", 
-                                 "Science Fiction", 
-                                 "Space Exploration", 
-                                 "Trains"),
+                                 "Educational",
+                                 "Humor",
+                                 "Bluffing", 
+                                 "Adventure", 
+                                 "Exploration", 
+                                 "Prehistoric",
+                                 "Medical",
+                                 "Modern Warfare",
+                                 "Horror"),
                      width = "450px"                # largura do select input dentro do sidebar.
                      )
                  ),
@@ -1169,13 +1115,12 @@ fluidPage(
                                         min_players, 
                                         min_age) |>
                                  filter(category == input$categoria_jogo &
-                                            min_play_time <=2000 &
-                                            min_players >=1 &
-                                            owned >=5000 & 
+                                            min_players ==1 &
+                                            min_play_time <= 160,
                                             min_age <= input$idade_minima) |>
                                  group_by(min_age) |>
                                  arrange(desc(wishing)) |> 
-                                 head(100) |> 
+                                 #head(200) |> 
                                  ggplot(aes(x = rank, 
                                             y = wishing, 
                                             color = min_play_time,
@@ -1249,24 +1194,26 @@ fluidPage(
 
 # Descrição dos jogos
 
-<div align=justify style="text-indent: 3em;">Com base nos dados analisados, listei abaixo 10 jogos que constam nas relações de 20 melhores rankings e 20 mais desejados.
+<div align=justify style="text-indent: 3em;">Com base nos dados analisados, listamos os jogos citados neste trabalho.
 </div>
 
 ```{r tabela primeira selecao de jogos}
 #| echo: FALSE
 
-jogos_selecao01 <- c(     # relação aleatória dos jogos selecionadas a partir das duas análises.
-    "Gloomhaven",
-    "Scythe",
-    "Terraforming Mars",
-    "Spirit Island",
-    "Gaia Project",
-    "Nemesis",
-    "Wingspan",
-    "Everdell",
-    "A Feast for Odin",
-    "Robinson Crusoe: Adventures on the Cursed Island"
-)
+jogos_selecao01 <- c(                               # relação dos jogos citados neste trabalho.
+    "A Feast for Odin", "Agricola", "Arkham Horror: The Card Game", "Black Angel", "Black Orchestra",
+    "Burgle Bros.", "Cascadia", "Caverna: The Cave Farmers", "Dune: Imperium", "Everdell",
+    "Endless Winter: Paleoamericans", "Facts in Five", "Gaia Project",
+    "Gandhi: The Decolonization of British India, 1917 – 1947", "Gloomhaven", "Gloomhaven: Jaws of the Lion",
+    "Ghost Stories", "Gutenberg", "Horrified", "Le Havre", "Lost Ruins of Arnak", "Mage Knight Board Game",
+    "Mansions of Madness: Second Edition", "Maracaibo", "Marvel Champions: The Card Game", "Nemesis",
+    "Neuroshima Hex! 3.0", "Pandemic", "Prolix", "Reykholt",
+    "Robinson Crusoe: Adventures on the Cursed Island", "Room 25", "Sagrada", "Scythe", "Shakespeare",
+    "Snowdonia", "Space Race", "Spirit Island", "Tang Garden", "Tapestry", "Teotihuacan: City of Gods",
+    "Terraforming Mars", "The 7th Continent", "The Shores of Tripoli", "Ubongo", "UBOOT: The Board Game", 
+    "Underwater Cities", "Viticulture Essential Edition", "Wingspan"
+    )
+
 selecao01 <- jogos_tabuleiro |>          # seleção das colunas com as informações para a tabela.
   select(
     name,
@@ -1278,41 +1225,63 @@ selecao01 <- jogos_tabuleiro |>          # seleção das colunas com as informa�
     max_play_time
   ) |>
   filter(jogos_tabuleiro$name %in% jogos_selecao01) |>  # filt. os dados de acordo com selecao1.
+    arrange(name) |> 
   kable(col.names = c("nome", "ano", "min jogadores",  #renom. na tabela os nomes das variáveis.
         "min idade", "tempo jogo", "min tempo jogo",
-        "max tempo jogo")) |> 
-  kable_styling(
-    html_font = "get_schwifty",                                # definimos a fonte do cabeçalho.
-    font_size = 12,                                             # tamanho da fonte do cabeçalho.
-    position = "center",                                                    # posição da tabela.
-    full_width = TRUE, 
-    htmltable_class = "lightable-hover",                                    #  fonte das linhas. 
-    fixed_thead = list(enabled = T, background = "#E9EBED")      # outros formatos do cabeçalho.
-  ) |> 
-    column_spec(1,  bold = FALSE, background = "#1F1F1F", color = "#FFFFFF") |>       # colunas.
-    column_spec(2,  bold = FALSE, background = "#1F1F1F", color = "#FFFFFF") |>
-    column_spec(3,  bold = FALSE, background = "#1F1F1F", color = "#FFFFFF") |>
-    column_spec(4,  bold = FALSE, background = "#1F1F1F", color = "#FFFFFF") |>
-    column_spec(5,  bold = FALSE, background = "#1F1F1F", color = "#FFFFFF") |>
-    column_spec(6,  bold = FALSE, background = "#1F1F1F", color = "#FFFFFF") |>
-    column_spec(7,  bold = FALSE, background = "#1F1F1F", color = "#FFFFFF") |> 
-    row_spec(1, align = "right") |>                                            # formato linhas.
-    row_spec(2, align = "right") |> 
-    row_spec(3, align = "right") |> 
-    row_spec(4, align = "right") |> 
-    row_spec(5, align = "right") |> 
-    row_spec(6, align = "right") |> 
-    row_spec(7, align = "right") |>
-    row_spec(8, align = "right") |> 
-    row_spec(9, align = "right") |> 
-    row_spec(10, align = "right")
-
+        "max tempo jogo"),
+        align = "l"
+        ) |> 
+    kable_styling(                                          # altera as configurações da tabela.
+        bootstrap_options = c("striped", 
+                              "condensed"
+                              ),
+        html_font = "",
+        font_size = 10,
+        full_width = TRUE, 
+        fixed_thead = list(enabled = TRUE,
+                           background = "#EDF6FD"
+                           ),
+        )|> 
+    kable_classic_2() |> 
+    column_spec(1,                                          # altera as configurações das colunas.
+                bold = FALSE,
+                width = "10cm",
+                ) |>      
+    column_spec(2, 
+                bold = FALSE,
+                width = "2cm"
+                ) |>
+    column_spec(3,
+                bold = FALSE,
+                width = "4cm"
+                ) |> 
+    column_spec(4,
+                bold = FALSE,
+                width = "4cm"
+                ) |> 
+    column_spec(5,
+                bold = FALSE,
+                width = "4cm"
+                ) |> 
+    column_spec(6,
+                bold = FALSE,
+                width = "10cm"
+                ) |> 
+    column_spec(7,
+                bold = FALSE,
+                width = "10cm"
+                ) |> 
+  footnote(general = "Base de dados Board Games - disponível na plataforma Kaggle.",
+           footnote_as_chunk = TRUE,
+           fixed_small_size = TRUE,
+           general_title = "Fonte:",
+           )
 selecao01                                                          # mostra a tabela no retório.
 ```
 
 <br>
 
-<div align=justify style="text-indent: 3em;"> Abaixo você pode encontrar a descrição destes jogos, segundo a base de dados. Selecione o nome do jogo para ler a descrição completa segundo a base de dados *"Board Games"*:
+<div align=justify style="text-indent: 3em;"> Você pode encontrar a descrição completa, selecionado o título para ler a descrição completa:
 </div>
 
 
@@ -1320,11 +1289,6 @@ selecao01                                                          # mostra a ta
 #| echo: FALSE
 
 fluidPage(                                 # selecionar o nome do filme para acesso à descrição.
-    # h4("Descrição do Jogo de Tabuleiro",
-    #    style = "color: #00121F;
-    #    background:#E9EBED;
-    #    width:455px;
-    #    line-height: 2.5;"),
     sidebarLayout(                               # input dos dados à esquerda e saída à direita.
         sidebarPanel = sidebarPanel(width = 5.0,     # painel para o input dos nomes dos filmes.
             div(style = "margin-right: 35px; 
@@ -1335,18 +1299,7 @@ fluidPage(                                 # selecionar o nome do filme para ace
                         shiny::selectInput(
                 inputId = "nome",                          # cria a chave para acesso aos dados.
                 label = "Jogo:" ,         # label no painel.
-                choices = c(                                        # jogos da lista de seleção.
-                    "Scythe",
-                    "Nemesis",
-                    "Wingspan",
-                    "Gloomhaven",
-                    "Terraforming Mars",
-                    "Spirit Island",
-                    "Gaia Project",
-                    "Everdell",
-                    "A Feast for Odin",
-                    "Robinson Crusoe: Adventures on the Cursed Island"
-                    ),
+                choices = jogos_selecao01,
                 )
                 )
             )
@@ -1400,12 +1353,19 @@ fluidPage(                                 # selecionar o nome do filme para ace
 
 # Conclusão
 
-Conclusão
+Realizada a análise dos jogos para usuários "solo", por meio das visualizações, podemos observar que nem todos os jogos do topo do *ranking* estão entre os mais desejados. 
 
+Fatores como preço, tempo mínimo de jogo, categoria, mecânica do jogo, faixa etária afetam o desejo de ganhar ou comprar um jogo.
 
-<div align=justify style="text-indent: 3em;">
+A existência de diversos temas, diferentes tempos de jogos, faixas etárias tornam difícil a escolha do melhor jogo para comprar.
 
+Um tema que não chama a atenção do jogador o torna desinteressante, é preciso escolher bem entre os vários temas disponiveis como aventura, terror, médico, animais, ficção científica e até inspirados em outras obras como livros;  
 
-</div>
+O tempo de jogo é importante para quem joga sozinho, então  aquele que demore em média 4 horas talvez não seja a melhor opção; 
+
+Se quem vai jogar é uma criança, deve-se observar a idade mínima. Muitos jogos exigem um raciocínio analítico e uso de estratégias avançadas, por este motivo os fabricantes informam a idade mínima recomendada.
+
+Em uma era de video games, um jogo de tabuleiro pode-lhe ser uma agradável surpresa, então, não espere um apagão para se divertir!
+
 
 
