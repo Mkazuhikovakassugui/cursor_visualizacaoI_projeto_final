@@ -41,13 +41,19 @@ knitr::include_graphics("https://www.deveserisso.com.br/blog/wp-content/uploads/
 
 # Contexto
 
-<div align=justify style="text-indent: 3em;"> Durante a pandemia da covid-19 e em plena era dos jogos "digitais", observa-se uma crescente procura pelos chamados jogos "analógicos", jogos de mesa e de tabuleiro, que retornaram às prateiras das lojas e *sites* especializados. Segundo dados da *Euromonitor International*, empresa britânica de pesquisa de mercado,  a combinação de tempo livre e nostalgia fez com que os europeus voltassem a procurá-los como opção de entretenimento. No Brasil, este comportamento também se repete. O mercado de brinquedos e jogos tradicionais aumentou de 1% do período pré-pandêmico para 3,16% em 2022.
+<div align=justify style="text-indent: 3em;"> Durante a pandemia da covid-19 e em plena era dos jogos digitais, o interesse das pessoas por jogos de mesa e de tabuleiro, que retornaram às prateiras das lojas e *sites* especializados, tem aumentado. Segundo dados da *Euromonitor International*, empresa britânica de pesquisa de mercado,  a combinação de tempo livre e nostalgia fez com que os europeus voltassem a procurá-los. No Brasil, o mercado de brinquedos e jogos tradicionais aumentou de 1% do período pré-pandêmico para 3,16% em 2022.
 
-Isto tem mexido com indústria de "games" eletrônicos e de mesa, tanto que jogos como [*"Assassin's  Creed"*](https://olhardigital.com.br/2022/03/17/games-e-consoles/jogo-de-tabuleiro-de-assassins-creed-sera-lancado-em-2022/) e [*"The Elder Scrolls 5: Skyrim"*](https://canaltech.com.br/games/the-elder-scrolls-5-skyrim-tera-jogo-de-tabuleiro-em-2022-200773/), ambos disponíveis em *Xbox* e *Playstation*, terão suas versões de tabuleiro lançadas em 2022.
+Este fenômeno tem mexido com indústria de "games" eletrônicos e de mesa, tanto que jogos como [*"Assassin's  Creed"*](https://olhardigital.com.br/2022/03/17/games-e-consoles/jogo-de-tabuleiro-de-assassins-creed-sera-lancado-em-2022/) e [*"The Elder Scrolls 5: Skyrim"*](https://canaltech.com.br/games/the-elder-scrolls-5-skyrim-tera-jogo-de-tabuleiro-em-2022-200773/), ambos disponíveis em *Xbox* e *Playstation*, terão suas versões de tabuleiro lançadas em 2022.
 
-Este trabalho de conclusão do curso tem o objetivo de analisar um *dataset* e construir visualizações gráficas a partir de seus dados. Uma das sugestões do curso foi a base "*Board Games*", disponibilizada pelo *Kaggle* e utilizada pelo *Tidytuesday* em um de seus eventos semanais que desafiam os usuários da linguagem R a construirem visualizações sobre um tema e assim promover discussões saudáveis. Decidi usá-la para a elaboração deste trabalho.
+Este trabalho de conclusão do curso tem o objetivo de analisar um *dataset* e construir visualizações gráficas a partir de seus dados. Uma das sugestões do curso foi a base de dados __*Board Games*__, disponibilizada pelo *Kaggle* e utilizada pelo *Tidytuesday* em um de seus eventos semanais que desafiam os usuários da linguagem R a construirem visualizações sobre um tema e assim promover discussões saudáveis. Decidi usá-la para a elaboração deste trabalho.
 
-Exploraremos os dados e construiremos as visualizações para os chamados **"Solo Board Games"**, aqueles que permitem partidas com apenas um jogador. Destacaremos os jogos desta categoria que se diferenciam segundo critérios como: as melhores médias na avaliações de usuários, a posição no ranking dos melhores jogos, os mais citados nas listas de desejos e nas listas de mais procurados, os mais comprados e a faixa etária de acordo com a base analisada.
+Exploraremos os dados e construiremos as visualizações para os chamados __*Solo Board Games*__, aqueles que permitem partidas com apenas um jogador. Destacaremos os jogos desta categoria considerando:
+
+- melhores médias na avaliações de usuários;  
+- posição no ranking;  
+- mais citados nas listas de desejos e nas listas de procurados;
+- indicação etária e
+- mais comercializados de acordo com a base analisada.  
 
 
 </div>
@@ -66,6 +72,7 @@ library(kableExtra)
 library(ggrepel)
 library(shiny)
 library(plotly)
+library(forcats)
 source("../R/funcoes_jogos.R")
 ```
 
@@ -81,7 +88,7 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 
 # Descrição das variáveis
 
-<div align=justify style="text-indent: 3em;"> A base *"Board Games"* é composta pelos arquivos *"ratings"* e *"details"* que trazem as seguintes variáveis:
+<div align=justify style="text-indent: 3em;"> A base *"Board Games"* é composta pelas bases *"ratings"* e *"details"* que trazem as seguintes variáveis:
 </div>
 
 <style type="text/css">
@@ -323,7 +330,7 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 
 </div>
 <br>
-<div align=justify style="text-indent: 3em;"> Após a união destas bases, obtivemos um *dataset* com `r nrow(jogos_tabuleiro)` linhas e `r ncol(jogos_tabuleiro)` variáveis de jogos com diversos temas, durações, mecânicas de jogos e com diferentes faixas etárias.
+<div align=justify style="text-indent: 3em;"> A união destas bases resulta em um *dataset* com `r nrow(jogos_tabuleiro)` linhas e `r ncol(jogos_tabuleiro)` variáveis de jogos com diversos temas,  diferentes tempos de duração, mecânicas de jogos e outros dados importantes para quem deseja adquirir um jogo de tabuleiro como faixa etária e existência de extensão de jogos, que permitem repetir o jogo em novas aventuras.
 
 
 </div>
@@ -334,11 +341,11 @@ jogos_tabuleiro <- read_rds("../data/base_preparada.RDS")
 
 ## Melhores do Ranking e sua notas médias.
 
-<div align=justify style="text-indent: 3em;"> Assim como os jogos digitais, alguns jogos de tabuleiro permitem que a partida seja realizada por apenas um jogador, o qual pode aproveitar momentos em que se encontra só para fugir da tecnologia e viver uma divertida aventura. 
+<div align=justify style="text-indent: 3em;"> Assim como os jogos digitais, alguns jogos de tabuleiro permitem que a partida seja realizada por apenas um jogador, o qual pode aproveitar momentos em que se encontra só, deixar de lado, ao menos por um tempo, a tecnologia e viver uma divertida aventura. 
 
-No seguinte gráfico, conhecido como *"lollypop plot"*, temos os jogos com as melhores avaliações ordenados pela sua posição no ranking geral, que considera as notas médias bayesianas.
+No seguinte gráfico, conhecido como *"lollypop plot"*, temos os jogos com as melhores avaliações de acordo com suas posições no ranking geral, considerando as notas médias bayesianas.
 
-Relacionamos apenas os 20 jogos melhores avaliados entre aqueles com no mínimo 10.000 avaliações.
+Relacionamos os 20 jogos **melhores avaliados** entre aqueles com no mínimo 10.000 avaliações.
 
 </div>
 
@@ -483,7 +490,7 @@ jogos_tabuleiro |>
 
 <div align=justify style="text-indent: 3em;">Entende-se por mais desejados aqueles jogos que os avaliadores expressaram sua vontade de ganhá-los, ou seja, colocaram-nos em suas *wishlists* (listas de desejos).
 
-O gráfico a seguir apresenta os vinte jogos mais desejados, considerando aqueles com mais de 10000 avaliações.
+O gráfico a seguir apresenta os vinte jogos **mais desejados**, considerando aqueles com mais de 10000 avaliações.
 
 </div>
 
@@ -776,59 +783,85 @@ nemesis <- jogos_tabuleiro_categoria |>
     arrange(desc(category)) |> 
     head(1)
 
-a_feast_for_odin<- jogos_tabuleiro_categoria |> 
+a_feast_for_odin <- jogos_tabuleiro_categoria |> 
     select(name, min_play_time, wishing, category, rank, owned, min_players) |>
     filter(name == "A Feast for Odin") |> 
     arrange(desc(category)) |> 
     head(1)
 
-wingspan<- jogos_tabuleiro_categoria |> 
+wingspan <- jogos_tabuleiro_categoria |> 
     select(name, min_play_time, wishing, category, rank, owned, min_players) |>
     filter(name == "Wingspan") |> 
     arrange(desc(category)) |> 
     head(1)
 
-everdell<- jogos_tabuleiro_categoria |> 
+everdell <- jogos_tabuleiro_categoria |> 
     select(name, min_play_time, wishing, category, rank, owned, min_players) |>
     filter(name == "Everdell") |> 
     arrange(desc(category)) |> 
     head(1)
 
-scythe<- jogos_tabuleiro_categoria |> 
+scythe <- jogos_tabuleiro_categoria |> 
     select(name, min_play_time, wishing, category, rank, owned, min_players) |>
     filter(name == "Scythe") |> 
     arrange(desc(category)) |> 
     head(1)
 
-pandemic<- jogos_tabuleiro_categoria |> 
-    select(name, min_play_time, wishing, category, rank, owned, min_players) |>
-    filter(name == "Pandemic") |> 
-    arrange(desc(category)) |> 
-    head(1)
-
-caverna_the_caves_farmers<- jogos_tabuleiro_categoria |> 
+caverna_the_caves_farmers <- jogos_tabuleiro_categoria |> 
     select(name, min_play_time, wishing, category, rank, owned, min_players) |>
     filter(name == "Caverna: The Cave Farmers") |> 
     arrange(desc(category)) |> 
     head(1)
 
-the_7_continent<- jogos_tabuleiro_categoria |> 
+the_7_continent <- jogos_tabuleiro_categoria |> 
     select(name, min_play_time, wishing, category, rank, owned, min_players) |>
     filter(name == "The 7th Continent") |> 
     arrange(desc(category)) |> 
     head(1)
 
-
-le_havre<- jogos_tabuleiro_categoria |> 
+spirit_island <- jogos_tabuleiro_categoria |> 
     select(name, min_play_time, wishing, category, rank, owned, min_players) |>
-    filter(name == "Le Havre") |> 
+    filter(name == "Spirit Island") |> 
+    arrange(desc(category)) |> 
+    head(1)
+
+wingspan <- jogos_tabuleiro_categoria |> 
+    select(name, min_play_time, wishing, category, rank, owned, min_players) |>
+    filter(name == "Wingspan") |> 
+    arrange(desc(category)) |> 
+    head(1)
+
+arkhan_horror <- jogos_tabuleiro_categoria |> 
+    select(name, min_play_time, wishing, category, rank, owned, min_players) |>
+    filter(name == "Arkhan Horror: The Card Game") |> 
+    arrange(desc(category)) |> 
+    head(1)
+
+viticulture <- jogos_tabuleiro_categoria |> 
+    select(name, min_play_time, wishing, category, rank, owned, min_players) |>
+    filter(name == "Viticulture Essential Edition") |> 
+    arrange(desc(category)) |> 
+    head(1)
+
+robinson_crusoe <- jogos_tabuleiro_categoria |> 
+    select(name, min_play_time, wishing, category, rank, owned, min_players) |>
+    filter(name == "Robinson Crusoe: Adventures on the Cursed Island") |> 
+    arrange(desc(category)) |> 
+    head(1)
+
+agricola <- jogos_tabuleiro_categoria |> 
+    select(name, min_play_time, wishing, category, rank, owned, min_players) |>
+    filter(name == "Agricola") |> 
     arrange(desc(category)) |> 
     head(1)
 
 
+
+
 ```
 
-<div align=justify style="text-indent: 3em;">O gráfico abaixo, com 33 categorias de jogos, contém a relação dos jogos mais desejados pelos usuários com tempo máximo de duração de 160 minutos, adquiridos por mais de 5000 pessoas (legenda amarela) e os jogos do topo do ranking citados anteriormente (legenda azul), mas que não estão entre os mais desejados em suas categorias.
+<div align=justify style="text-indent: 3em;">A seguir, trazemos os jogos mais desejados organizados por **categoria**, com duração máxima de 160 minutos e adquiridos por mais de 5000 usuários (legenda amarela). 
+Também traz alguns dos jogos que se destacam no **ranking** de notas médias (legenda azul).
 </div>
 
 ```{r grafico jogos por categoria desejo ganhar presente e tempo minimo}
@@ -968,10 +1001,13 @@ jogos_tabuleiro_categoria |>
     anotar_1_ranking(a_feast_for_odin)+
     anotar_2_ranking(everdell)+
     anotar_2_ranking(scythe)+
-    anotar_1_ranking(pandemic)+
     anotar_1_ranking(dune_imperium)+
     anotar_1_ranking(caverna_the_caves_farmers)+
     anotar_1_ranking(the_7_continent)+
+    anotar_1_ranking(arkhan_horror)+
+    anotar_2_ranking(viticulture)+
+    anotar_2_ranking(robinson_crusoe)+
+    anotar_2_ranking(agricola)+
     annotate("rect",                                     # cria retângulo ao redor das legendas.
              xmin = 13150, 
              xmax = 20600, 
@@ -1019,7 +1055,7 @@ jogos_tabuleiro_categoria |>
 ## Idade mínima
 
 <div align=justify style="text-indent: 3em;">
-Para encontrar os jogos para jogadores "solo" com duração mínima inferior a 160 minutos disponíveis por idade, forneça a categoria e a idade para visualizar quais opções existem entre os mais desejados e sua posição no ranking de notas:
+Para encontrar os jogos "solo" com duração mínima inferior a 160 minutos disponíveis por **faixa etária**, forneça a categoria e a idade para visualizar quais opções existem entre os mais desejados e sua posição no ranking de notas:
 
 </div>
 
@@ -1207,11 +1243,10 @@ jogos_selecao01 <- c(                               # relação dos jogos citado
     "Gandhi: The Decolonization of British India, 1917 – 1947", "Gloomhaven", "Gloomhaven: Jaws of the Lion",
     "Ghost Stories", "Gutenberg", "Horrified", "Le Havre", "Lost Ruins of Arnak", "Mage Knight Board Game",
     "Mansions of Madness: Second Edition", "Maracaibo", "Marvel Champions: The Card Game", "Nemesis",
-    "Neuroshima Hex! 3.0", "Pandemic", "Prolix", "Reykholt",
-    "Robinson Crusoe: Adventures on the Cursed Island", "Room 25", "Sagrada", "Scythe", "Shakespeare",
-    "Snowdonia", "Space Race", "Spirit Island", "Tang Garden", "Tapestry", "Teotihuacan: City of Gods",
-    "Terraforming Mars", "The 7th Continent", "The Shores of Tripoli", "Ubongo", "UBOOT: The Board Game", 
-    "Underwater Cities", "Viticulture Essential Edition", "Wingspan"
+    "Neuroshima Hex! 3.0", "Prolix", "Reykholt", "Robinson Crusoe: Adventures on the Cursed Island",
+    "Sagrada", "Scythe", "Shakespeare", "Snowdonia", "Space Race", "Spirit Island", "Tang Garden",
+    "Tapestry", "Teotihuacan: City of Gods", "Terraforming Mars", "The 7th Continent", "Ubongo", 
+    "UBOOT: The Board Game", "Underwater Cities", "Viticulture Essential Edition", "Wingspan"
     )
 
 selecao01 <- jogos_tabuleiro |>          # seleção das colunas com as informações para a tabela.
@@ -1281,12 +1316,14 @@ selecao01                                                          # mostra a ta
 
 <br>
 
-<div align=justify style="text-indent: 3em;"> Você pode encontrar a descrição completa, selecionado o título para ler a descrição completa:
+<div align=justify style="text-indent: 3em;"> Você pode encontrar a descrição completa destes jogos, selecionado o título para ler a descrição completa:
 </div>
 
 
 ```{r sidebarlayout input nome output descricao}
 #| echo: FALSE
+
+jogos_tabuleiro_traduzido <- read_csv("../data/filmes_descricao.csv")
 
 fluidPage(                                 # selecionar o nome do filme para acesso à descrição.
     sidebarLayout(                               # input dos dados à esquerda e saída à direita.
@@ -1317,7 +1354,7 @@ fluidPage(                                 # selecionar o nome do filme para ace
                         line-height:1.8;",
                         output$tab1 <- renderTable(                        # renderiza a tabela.
                         {
-                            descricao <- jogos_tabuleiro |>   
+                            descricao <- jogos_tabuleiro_traduzido |>   
                                 filter(name == input$nome) |> 
                                 select(description) |> 
                                  rename("Descrição" = "description") 
@@ -1353,19 +1390,15 @@ fluidPage(                                 # selecionar o nome do filme para ace
 
 # Conclusão
 
-Realizada a análise dos jogos para usuários "solo", por meio das visualizações, podemos observar que nem todos os jogos do topo do *ranking* estão entre os mais desejados. 
+<div align=justify style="text-indent: 3em;">Realizada a análise dos jogos para usuários "solo", por meio das visualizações, podemos observar que nem todos os jogos do topo do *ranking* estão entre os mais desejados.  
 
-Fatores como preço, tempo mínimo de jogo, categoria, mecânica do jogo, faixa etária afetam o desejo de ganhar ou comprar um jogo.
+Fatores como preço, tempo mínimo de duração, categoria, mecânica, faixa etária afetam o desejo de ganhar ou comprar um jogo. Além disto, a existência de diversos temas tornam difícil a escolha do melhor para comprar ou pedir de presente, pois temas que não chamam a atenção do jogador os tornam desinteressantes, então é preciso escolher bem entre os vários disponiveis.  
 
-A existência de diversos temas, diferentes tempos de jogos, faixas etárias tornam difícil a escolha do melhor jogo para comprar.
+Sobre o tempo, os jogos com 4 horas ou mais de duração talvez não sejam a melhor opção para quem quer jogar sozinho e se quem vai jogar é uma criança, deve-se observar a idade mínima. Muitos jogos exigem o raciocínio analítico e o uso de estratégias avançadas, por este motivo os fabricantes informam a idade mínima recomendada.
 
-Um tema que não chama a atenção do jogador o torna desinteressante, é preciso escolher bem entre os vários temas disponiveis como aventura, terror, médico, animais, ficção científica e até inspirados em outras obras como livros;  
+Neste trabalho encontramos 46 opções de jogos que permitem uma aventura "solo", mas o melhor jogo depende de cada jogador. Em uma era de video games, um jogo de tabuleiro pode ser uma agradável surpresa, então, não espere um apagão para se divertir. 
 
-O tempo de jogo é importante para quem joga sozinho, então  aquele que demore em média 4 horas talvez não seja a melhor opção; 
 
-Se quem vai jogar é uma criança, deve-se observar a idade mínima. Muitos jogos exigem um raciocínio analítico e uso de estratégias avançadas, por este motivo os fabricantes informam a idade mínima recomendada.
-
-Em uma era de video games, um jogo de tabuleiro pode-lhe ser uma agradável surpresa, então, não espere um apagão para se divertir!
-
+</div>
 
 
